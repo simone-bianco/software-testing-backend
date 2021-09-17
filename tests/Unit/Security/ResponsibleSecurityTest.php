@@ -1,9 +1,10 @@
 <?php
 
-namespace Tests\Feature\Security;
+namespace Tests\Unit\Security;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Response;
+use Session;
 use Tests\SecurityTestCase;
 use Throwable;
 
@@ -23,7 +24,7 @@ class ResponsibleSecurityTest extends SecurityTestCase
         foreach ($this->otherStructures as $structure) {
             $protectedReservation = $this->getFirstReservation($structure);
             $this->be($this->unauthorizedResponsible->account->user);
-            \Session::put('2fa', true);
+            Session::put('2fa', true);
 
             $response = $this->call(
                 'GET',
@@ -38,7 +39,7 @@ class ResponsibleSecurityTest extends SecurityTestCase
         foreach ($this->otherStructures as $structure) {
             $protectedReservation = $this->getFirstReservation($structure);
             $this->be($this->unauthorizedResponsible->account->user);
-            \Session::put('2fa', true);
+            Session::put('2fa', true);
             $response = $this->call(
                 'PUT',
                 "/prenotazione/$protectedReservation->id/update"
@@ -51,7 +52,7 @@ class ResponsibleSecurityTest extends SecurityTestCase
     {
         foreach ($this->otherStructures as $structure) {
             $this->be($this->unauthorizedResponsible->account->user);
-            \Session::put('2fa', true);
+            Session::put('2fa', true);
             $response = $this->call(
                 'POST',
                 "/prenotazione/salva",
@@ -65,7 +66,7 @@ class ResponsibleSecurityTest extends SecurityTestCase
     {
         foreach ($this->otherStructures as $structure) {
             $this->be($this->unauthorizedResponsible->account->user);
-            \Session::put('2fa', true);
+            Session::put('2fa', true);
             $response = $this->call(
                 'POST',
                 "/prenotazioni/reservations-polling",

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Security;
+namespace Tests\Unit\Security;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Response;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Security;
+namespace Tests\Unit\Security;
 
 use App\Models\User;
 use App\Repositories\UserRepository;
