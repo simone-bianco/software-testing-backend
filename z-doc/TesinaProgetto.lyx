@@ -1,0 +1,2927 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+% LOGO
+\usepackage{eso-pic,graphicx}
+\makeatletter
+\newcommand\BackgroundPicture[2]{
+\setlength{\unitlength}{1pt}
+\put(0,\strip@pt\paperheight){
+\parbox[t][\paperheight]{\paperwidth}{
+\vfill
+\centering\includegraphics[angle=#2]{#1}
+\vfill
+}
+}
+}
+\makeatother
+%Per i marigini
+\sloppy
+
+\usepackage{listings,xcolor,courier,bookmark}
+\usepackage{listingsutf8}
+\definecolor{darkblue}{named}{blue}
+\definecolor{darkred}{named}{red}
+\definecolor{grau}{named}{gray}
+\let\Righttorque\relax
+\lstset{
+captionpos=b,
+commentstyle=\color[rgb]{0.133,0.545,0.133},
+keywordstyle=\color{darkblue},
+stringstyle=\color{darkred},
+extendedchars=true,
+basicstyle=\small\ttfamily,
+showstringspaces=false,
+tabsize=2,
+numbers=left,
+numberstyle=\tiny,
+breakautoindent  = true,
+breakindent      = 2em,
+breaklines       = true,
+postbreak        = ,
+prebreak         = \raisebox{-.8ex}[0ex][0ex]{\Righttorque},
+showspaces=false, 
+showtabs=false, 
+showstringspaces=false,
+language=VHDL,
+frame=single,
+morecomment=[s]{--}
+}
+
+
+\renewcommand*{\lstlistingname}{Codice Componente}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{} % cancella tutti i campi
+\fancyfoot{} % cancella tutti i campi
+
+\fancyhead[RO,LE]{\bfseries \leftmark}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[LO,CE]{Elaborato di SAD: Software Architecture Design}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\cfoot{}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language italian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family rmdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2.5cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style french
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset External
+	template PDFPages
+	filename frontespizio.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align left
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+FASE DI AVVIO DEL PROGETTO
+\end_layout
+
+\begin_layout Section
+Documento di vision
+\end_layout
+
+\begin_layout Section
+Glosssario
+\end_layout
+
+\begin_layout Section
+Diagramma dei casi d'uso
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/UseCaseDiagram.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagramma edi casi d'uso
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+PROCESSO DI SVILUPPO
+\end_layout
+
+\begin_layout Standard
+Si è deciso di scegliere UP come processo di sviluppo per produrre il software.
+ In UP viene scelto uno sviluppo iterativo ed evolutivo, organizzato come
+ una serie di mini progetti brevi di lunghezza prefissata dette iterazioni.
+ Ogni iterazione produce un sistema eseguibile, testato ed integrato, seppur
+ parziale.
+\end_layout
+
+\begin_layout Standard
+Ogni iterazione deve comprendere le fasi di analisi dei requisiti, progettazione
+, implementazione e test.
+ Lo sviluppo evolve attraverso cicli di costruzione-feedback-adattamento.
+ Le prime iterazioni sono fondaentali per ridurre l'instabilità dei requisiti.
+\end_layout
+
+\begin_layout Standard
+L'iterazione per convenzione comincia a inizio settimana, ma è preceduta
+ da un incontro di Workshop nel quale bisogna stabilire i requisiti da implement
+are.
+ Nel primo giorno di workshop si effettua un'analisi dei requisiti di alto
+ livello, elencando solo i nomi dei casi d'uso e principali requisiti non
+ funzionali.
+ In seguito si stabilisce quali requisiti siano prioritari rispetto ad altri.
+ Solitamente solo il 10% di questi casi d'uso saranno implementati nella
+ prima iterazione, cercando di dare priorità a quelli importanti per l'utente.
+ Nel giorno successivo si esegue un'analisi dettagliata dei requisiti funzionali
+ e non funzionali stabiliti.
+ Terminato il workshop (preliminare allo sviluppo per iterazioni), possiamo
+ andare a descrivere cosa accadrà ad ogni iterazione.
+\end_layout
+
+\begin_layout Standard
+Abbiamo deciso di strutturare il nostro processo di sviluppo in 2 iterazioni
+ di 2 settimane ciascuna.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Fase di ideazione o inception
+\series default
+: in questa fase abbiamo effettuato uno studio di fattibilità nella quale
+ sono state prodotte stime di costi e tempi, documento di vision, glossario,
+ vincoli ecc e un primo modello di casi d'uso (documentazione al capitolo
+ 2).
+ Tutta la documentazione prodotta in questa fase verrà pooi raffinata nelle
+ iterazioni successive di elaborazione.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Primo incontro di workshop
+\series default
+ abbiamo fatto un' analisi dei requisiti di alto livello elencando solo
+ i nomi dei casi d'uso e i principali requisiti non funzionali come mostrato
+ nell capitolo 3.
+ Nel secondo giorno abbiamo scelto i 3 casi d'uso più prioritari da sviluppare
+ lavorando a coppie ed abbiamo effettuato un'analisi dettagliata dei requisti
+ funzionali e non funzionali relativi a questi casi d'uso.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="8cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+GRUPPO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Caso d'uso
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prenota vaccino (Paziente)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Visualizza prenotazioni (Responsabile)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gestisci prenotazione (Responsabile)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Casi d'uso scelti iterazione 1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Iterazione 1
+\series default
+: Nei primi giorni abbiamo fatto modellazione e progettazione a coppie con
+ UML su lavagna, producendo modelli come quello di dominio, diagrammi delle
+ classi e diagrammi di sequenza relativi ai casi d'uso scelti.
+ Nei giorni successivi, a parrtire da questi modelli si inizia a programmare
+ eseguendo in parallelo allo sviluppo test di unità e di integrazione.
+ Dopodichè, il martedì dell'ultima settimana il codice prodotto dalle 2
+ coppie di lavoro viene congelato, integrato e viene eseguito un test di
+ sistema (anche se parziale).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Secondo incontro di Workshop
+\series default
+: Si raffina il materiale prodotto nel primo workshop, si sceglie un altro
+ gruppo di casi d'uso tra i più prioritari da implementare e si esegue un'analis
+i dettagliata dei requisiti funzionali e non funzionali relativi a questi
+ casi d'uso.
+ Infine si organizza un incontro il venerdì per pianificare l'iterazione
+ successiva.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="8cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+GRUPPO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Caso d'uso
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Registrazione da App (Paziente)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Login da App (Paziente)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Login da backend (Responsabile, Direttore, Admin)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prenota richiamo (Responsabile)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Casi d'uso scelti iterazione 2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Iterazione 2
+\series default
+: si ripete la stessa cosa dell'iterazione 1 con la differenza che i casi
+ d'uso da sviluppare sono diversi.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+SPECIFICA E ANALISI DEI REQUISITI
+\end_layout
+
+\begin_layout Section
+Requisiti funzionali
+\end_layout
+
+\begin_layout Subsection
+Formato breve
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="16" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="2cm">
+<column alignment="center" valignment="middle" width="4cm">
+<column alignment="center" valignment="top" width="9cm">
+<column alignment="center" valignment="top" width="2cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Attore
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Caso d’Uso
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Descrizione
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Priorità
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Paziente
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Registrazione
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Il paziente prima del login deve registrarsi alla piattaforma
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+media
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CompilazioneProfilo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Il paziente per potersi registrare deve compilare il profilo con tutte le
+ informazioni richieste
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+media
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Paziente Loggato
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gestione Profilo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Il paziente deve poter modificare le proprie informazioni precedentemente
+ immesse all’atto della registrazione
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+media
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prenota Vaccino
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Una volta completato il login, il paziente può effettuare la prenotazione
+ di un vaccino richiedendola dall’app.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+alta
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Visualizza Prenotazione
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Consente la visualizzazione della prenotazione che ha effettuato (se esiste)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bassa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cancella Prenotazione
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Consente al paziente loggato di poter cancellare la prenotazione 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bassa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Visualizza Somministrazioni
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Il paziente deve poter controllare le informazioni di tutti i vaccini che
+ si è fatto somministrare 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bassa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Responsabile Sanitario
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Visualizza Prenotazioni
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Il paziente deve poter controllare le informazioni di tutti i vaccini che
+ si è fatto somministrare 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+alta
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gestisci Prenotazione
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Il responsabile sanitario, tramite interfaccia web, può visualizzare tutte
+ le informazioni relative alle prenotazioni della struttura sanitari
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+alta
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prenota Richiamo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Il responsabile sanitario deve poter confermare, rifiutare o completare
+ la prenotazione di un paziente
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+alta
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dirigente
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CRUD Scorte
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Se previsto, il responsabile sanitario gestisce la prenotazione di una seconda
+ dose di un determinato paziente
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bassa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CRUD Responsabili
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Il dirigente deve poter gestire i responsabili sanitari relativi al centro
+ vaccinale di sua competenza
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bassa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Admin
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CRUD Dirigenti
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+L’admin gestisce i dirigenti, associandolo o cancellandolo da una determinata
+ struttura
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bassa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CRUD Centri Vaccinali
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+L’Admin deve poter aggiungere, modificare o eliminare un determinato centro
+ vaccinale
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bassa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Crud Vaccini
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+L’admin può inserire o rendere non disponibile una tipologia di vaccino
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bassa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Casi d'uso in formato breve
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Formato informale
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Registrazione
+\series default
+: Procedura di registrazione all’app da parte del paziente, obbligatoria
+ quando accede per la prima volta alla piattaforma.
+ Il paziente dovra compilare correttamente tutti i campi richiesti (e-mail,
+ password, nome, cognome, data, sesso, codice fiscale, città, cap, telefono
+ e malattie) affinché la registrazione vada a buon fine.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Login
+\series default
+: Procedura di login da parte del paziente, del personale sanitario o del
+ dirigente per accedere alla piattaforma.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Modifica profilo
+\series default
+: Dalla homepage consente al paziente di modificare le informazioni del
+ profilo immessi all’atto della registrazione compreso il form per le eventuali
+ malattie.
+ Se il paziente immette dati non validi o non compila campi obbligatori
+ il sistema non salva le modifiche e rindirizza il paziente sulla homepage.
+ L’indirizzo e-mail non può essere modificato.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Prenota vaccino
+\series default
+: Permette di prenotare un vaccino scelto dal sistema.
+ La regione e la struttura sanitaria viene scelta dal paziente (verranno
+ mostrate tutte le strutture relative a quella regione).
+ Il paziente può scegliere la data dell’appuntamento scegliendo tra quelle
+ disponibili mostrate dal sistema, l’ora invece verrà assegnata in base
+ al numero di prenotazioni totali della struttura in quella giornata.
+ Il responsabile dovrà poi confermare o meno la prenotazione.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Visualizza prenotazione
+\series default
+ (Paziente): Il paziente una volta che effettua il login entra automaticamente
+ nella home dove gli verranno mostrate tutte le informazioni (struttura,
+ data, ora, lotto-vaccino, stato) relative alla prenotazione, se esiste.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Cancella prenotazione
+\series default
+: Consente al paziente di cancellare la propria prenotazione.
+ La cancellazione si può effettuare al massimo entro le 72 ore dalla data
+ dell’appuntamento.
+ In seguito, il paziente potrà effettuare una nuova prenotazione.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Visualizza somministrazioni
+\series default
+: Consente al paziente di visualizzare le vaccinazioni che ha già effettuato.
+ Cliccando sulla pagina di visualizza somministrazioni, il sistema mostra
+ al paziente le prenotazioni già completate (ovvero con la conferma della
+ somministrazione).
+ Se non esistono prenotazioni completate il sistema mostra un messaggio
+ di somministrazioni non presenti.
+ Se il paziente clicca su una somministrazione verrà rindirizzato sulla
+ pagina di dettaglio della somministrazione in cui può decidere di scaricare
+ un attestato di vaccinazione.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Visualizza Prenotazioni
+\series default
+ (Responsabile sanitario): Permette all’utente di visualizzare tutte le
+ prenotazioni oppure un gruppo di prenotazioni in base ad un filtro (da
+ confermare, confermata, cancellata, completata) relative al centro vaccinale
+ di cui fa parte.
+ È possibile ricercare anche le prenotazioni relative ad un singolo paziente
+ digitando il suo nome e cognome nella barra di ricerca.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Prenota richiamo
+\series default
+: Consente al responsabile sanitario di prenotare un eventuale richiamo
+ per il paziente dopo la somministrazione della prima dose di un vaccino.
+ Il responsabile dalla pagina di gestione prenotazioni può decidere di prenotare
+ un richiamo cliccando su un pulsante dalla pagina di gestione prenotazione,
+ solo se la prenotazione precedente risulta nello stato completata.
+ A questo punto il responsabile viene rindirizzato sulla pagina di prenotazione
+ di un richiamo relativo allo stesso paziente, in cui dovrà compilare i
+ campi come data, orario, vaccino, e cliccare su conferma.
+ La nuova prenotazione verrà salvata con lo stato confermata e sarà di tipo
+ richiamo.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Gestici prenotazione
+\series default
+: Consente al responsabile sanitario di confermare, rifiutare, completare
+ o modificare una prenotazione (ovvero confermare l’avvenuta somministrazione)
+ dopo aver selezionato una prenotazione dalla pagina di visualizza prenotazioni.
+ Se la prenotazione è nello stato “da confermare” allora saranno disponibili
+ solo i pulsanti per confermarla o rifiutarla.
+ Se la prenotazione è nello stato “confermata” o “cancellata” allora è disponibi
+le solo il pulsante per completarla.
+ Se il responsabile modifica una prenotazione attraverso i campi del form,
+ questa verrà salvata solo in concomitanza della pressione del pulsante
+ per confermare.
+ 
+\end_layout
+
+\begin_layout Subsection
+Formato dettagliato
+\end_layout
+
+\begin_layout Standard
+Si riporta la specifica dettagliata dei requisiti relativi ai casi d'uso
+ implementati nelle due iterazioni del processo di sviluppo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\size large
+Caso d’uso
+\series default
+\size default
+: 
+\size large
+Gestisci prenotazione 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Attori
+\series default
+: Responsabile sanitario 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Priorità
+\series default
+: alta 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Dipendenze
+\series default
+: extend di Visualizza Prenotazioni 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Precondizioni
+\series default
+: 
+\end_layout
+
+\begin_layout Standard
+\align block
+Il responsabile ha effettuato il login per accedere alla piattaforma.
+ 
+\end_layout
+
+\begin_layout Standard
+Il responsabile si trova nella pagina di visualizza prenotazioni.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Sequenza degli eventi: 
+\end_layout
+
+\begin_layout Enumerate
+Il caso d’uso ha inizio quando il responsabile seleziona una prenotazione
+ dalla pagina di visualizza prenotazioni.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema mostra i dettagli della prenotazione (stato, data, orario, vaccino)
+ e i dettagli del paziente prenotato (dati anagrafici e form compilato).
+\end_layout
+
+\begin_layout Enumerate
+Il responsabile modifica opzionalmente i campi modificabili della prenotazione
+ e clicca su conferma per confermare la prenotazione.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema salva la prenotazione salvata con i nuovi campi e con lo stato
+ “confermata”.
+\end_layout
+
+\begin_layout Enumerate
+Il sistema reindirizza il responsabile sulla pagina di visualizza prenotazioni.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenari alternativi 
+\end_layout
+
+\begin_layout Standard
+3.1.1 Il responsabile non modifica i campi della prenotazione ma si limita
+ a confermarla.
+ 
+\end_layout
+
+\begin_layout Standard
+3.1.2 Il sistema salva la prenotazione con lo stato “confermata” 
+\end_layout
+
+\begin_layout Standard
+3.1.3 Il sistema reindirizza il responsabile sulla pagina di visualizza prenotazio
+ni.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+3.2.1 Il responsabile decide di rifiutare la prenotazione.
+ 
+\end_layout
+
+\begin_layout Standard
+3.2.2 Il sistema salva la prenotazione con lo stato “cancellata” 
+\end_layout
+
+\begin_layout Standard
+3.2.3 Il sistema reindirizza il responsabile sulla pagina di visualizza prenotazio
+ni.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+3.3.1 Il responsabile decide di completare la prenotazione.
+ 
+\end_layout
+
+\begin_layout Standard
+3.3.2 Il sistema salva la prenotazione con lo stato “completata” 
+\end_layout
+
+\begin_layout Standard
+3.3.3 Il sistema aggiorna la pagina della gestione della prenotazione con
+ il nuovo stato 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Postcondizioni: 
+\end_layout
+
+\begin_layout Standard
+Il sistema salva la prenotazione con il nuovo stato 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\size large
+Caso d’uso
+\series default
+\size default
+: 
+\size large
+VisualizzaPrenotazioni 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Attori: 
+\series default
+Responsabile sanitario, Dirigente 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Priorità
+\series default
+: media 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Dipendenze
+\series default
+: extend di Visualizza Prenotazioni 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Precondizioni
+\series default
+: 
+\end_layout
+
+\begin_layout Standard
+\align block
+Il responsabile ha effettuato il login per accedere alla piattaforma.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Sequenza degli eventi: 
+\end_layout
+
+\begin_layout Enumerate
+Il caso d’uso inizia quando il responsabile sanitario richiede di visualizzare
+ le prenotazioni 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema mostra tutte prenotazioni della struttura 
+\end_layout
+
+\begin_layout Enumerate
+Il responsabile sceglie di filtrare le prenotazioni in base ad un parametro
+ 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema mostra le prenotazioni filtrate
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenari alternativi 
+\end_layout
+
+\begin_layout Standard
+ Se due persone (anche diversi attori) accedono alla stessa finestra, il
+ sistema può gestirli poiché non si possono effettuare modifiche
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Postcondizioni: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\size large
+Caso d’uso
+\series default
+\size default
+: 
+\size large
+Prenota richiamo 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Attori
+\series default
+: Responsabile sanitario 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Priorità
+\series default
+: alta 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Dipendenze
+\series default
+: extend del caso d’uso Gestisci Prenotazione
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Precondizioni
+\series default
+: 
+\end_layout
+
+\begin_layout Itemize
+\align block
+Il responsabile ha effettuato il login per accedere alla piattaforma 
+\end_layout
+
+\begin_layout Itemize
+\align block
+Il responsabile si trova nella pagina di gestione di una prenotazione 
+\end_layout
+
+\begin_layout Itemize
+\align block
+La prenotazione risulta nello stato di completata
+\end_layout
+
+\begin_layout Standard
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Sequenza degli eventi: 
+\end_layout
+
+\begin_layout Enumerate
+Il responsabile decide di prenotare un richiamo cliccando sul relativo pulsante
+ 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema rindirizza il responsabile sulla pagina per prenotare un richiamo
+ 
+\end_layout
+
+\begin_layout Enumerate
+Il responsabile compila i campi (data, orario, vaccino) e conferma 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema salva la prenotazione con lo stato di confermata 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema rindirizza il responsabile sulla pagina di visualizza prenotazioni
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenari alternativi 
+\end_layout
+
+\begin_layout Standard
+1.1 Se la prenotazione non risulta nello stato di completata, il pulsante
+ relativo alla prenotazione di un richiamo è disabilitato e la prenotazione
+ non può essere effettuata
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Postcondizioni: 
+\end_layout
+
+\begin_layout Standard
+Il sistema crea una nuova prenotazione relativa al paziente della precedente
+ prenotazione e con i dati compilati dal responsabile 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\size large
+Caso d’uso
+\series default
+\size default
+: 
+\size large
+Prenota Vaccino
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Attori
+\series default
+: PazienteLoggato
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Priorità
+\series default
+: alta 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Dipendenze
+\series default
+: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Precondizioni
+\series default
+: 
+\end_layout
+
+\begin_layout Itemize
+\align block
+Il paziente ha effettuato il login 
+\end_layout
+
+\begin_layout Itemize
+\align block
+Il paziente non ha già prenotazioni attive 
+\end_layout
+
+\begin_layout Itemize
+\align block
+Il paziente non ha completato già la vaccinazione per questa campagna vaccinale
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Sequenza degli eventi: 
+\end_layout
+
+\begin_layout Enumerate
+Il caso d’uso inizia quando il paziente richiede di prenotare un vaccino
+ 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema mostra a video i campi che il paziente deve compilare 
+\end_layout
+
+\begin_layout Enumerate
+Il paziente sceglie una regione 
+\end_layout
+
+\begin_layout Enumerate
+Una volta scelta la regione, sarà sbloccata al paziente la possibilità di
+ scegliere la struttura sanitaria desiderata 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema fornisce un calendario con le date e il paziente sceglie in base
+ alle sue esigenze 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema assegna un vaccino in base alla quantità disponibile in quella
+ struttura (?) tra i vaccini idonei.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema assegna un orario in base alle prenotazioni della struttura in
+ quel giorno 
+\end_layout
+
+\begin_layout Enumerate
+Il sistema mostra il riepilogo della prenotazione nella home dell’applicazione
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenari alternativi 
+\end_layout
+
+\begin_layout Itemize
+Se l’utente non compila tutti i campi richiesti (regione, struttura e data)
+ allora il sistema segnala l’errore “completa tutti i campi richiesti”.
+ 
+\end_layout
+
+\begin_layout Itemize
+Se l’utente, in qualunque momento abbandona la pagina prima di confermare,
+ il sistema non salva le informazioni e l’utente deve di nuovo richiedere
+ una prenotazione
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Postcondizioni: 
+\end_layout
+
+\begin_layout Standard
+Il paziente non potrà effettuare nuove prenotazioni se non completa oppure
+ cancella la prenotazione 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\size large
+Caso d’uso
+\series default
+\size default
+: 
+\size large
+Registrazione
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Attori
+\series default
+: Paziente 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Priorità
+\series default
+: alta 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Dipendenze
+\series default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Precondizioni
+\series default
+: 
+\end_layout
+
+\begin_layout Standard
+\align block
+Il paziente non è registrato già al sistema
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Sequenza degli eventi: 
+\end_layout
+
+\begin_layout Enumerate
+Il caso d’uso inizia quando il Paziente installerà e apre l’app “Project
+ Sad”.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Il paziente compila i dati richiesti 
+\end_layout
+
+\begin_layout Enumerate
+Il paziente viene autenticato dal sistema, e il caso d’uso termina 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenari alternativi 
+\end_layout
+
+\begin_layout Standard
+Scenari: 
+\end_layout
+
+\begin_layout Standard
+2.1 Se il Paziente immette i dati correttamente, la registrazione va a buon
+ fine 
+\end_layout
+
+\begin_layout Standard
+2.2 Se il Paziente non compila tutti i campi richiesti, il sistema mostra
+ un messaggio di errore e chiede di ricompilare i campi 
+\end_layout
+
+\begin_layout Standard
+2.3 Se il Paziente si è già registrato precedentemente verrà mostrato il
+ messaggio di “account già esistente” 
+\end_layout
+
+\begin_layout Standard
+2.4 Se il Paziente immette campi non corretti (es.
+ Data di Nascita) il sistema mostra un messaggio di errore “incorrect details”
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Postcondizioni: 
+\end_layout
+
+\begin_layout Standard
+Verrà creato un nuovo record relativo all’utente nel database
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\size large
+Caso d’uso
+\series default
+\size default
+: 
+\size large
+Login
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Attori
+\series default
+: Paziente, Responsabile Sanitario, Dirigente 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Priorità
+\series default
+: alta 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Dipendenze
+\series default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Precondizioni
+\series default
+: 
+\end_layout
+
+\begin_layout Standard
+\align block
+Gli attori che avviano il caso uso devono essere registrati al sistema (quindi
+ presenti nel database) compilando gli appositi campi correttamente (login
+ e password) 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Sequenza degli eventi: 
+\end_layout
+
+\begin_layout Enumerate
+Il caso d’uso inizia quando un paziente apre l’applicazione.
+ 
+\end_layout
+
+\begin_layout Enumerate
+L’utente inserisce i dati necessari all’accesso 
+\end_layout
+
+\begin_layout Enumerate
+L’utente clicca sull’apposito tasto di login e accede alla piattaforma 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenari alternativi 
+\end_layout
+
+\begin_layout Standard
+Scenari: 
+\end_layout
+
+\begin_layout Standard
+2.1 Se l’utente non ha effettuato la registrazione oppure immette username
+ e/o password sbagliata allora il sistema mostra un messaggio di errore
+ “incorrect details” 
+\end_layout
+
+\begin_layout Standard
+2.2 Se L’utente immette correttamente le informazioni richieste, il paziente
+ entra nella schermata di home.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Postcondizioni: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+offset "0.5ex"
+width "100col%"
+height "1pt"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Diagrammi dei requisiti
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+DOCUMENTAZIONE DI PROGETTO
+\end_layout
+
+\begin_layout Section
+Modello di dominio
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/modello di dominio.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Modello di dominio
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Diagramma delle classi alto livello
+\end_layout
+
+\begin_layout Standard
+Si riporta di seguito il diagramma delle classi di progettazione di alto
+ livello.
+ Questo modello è di alto livello, e quindi è ancora indipendente dalla
+ tecnologia implementativa che verrà utilizzata, ed è un raffinamento del
+ modello di dominio in cui oltre alle classi di dominio sono presenti delle
+ classi aggiuntive necessarie alla realizzazione dei casi d'uso dell'applicazion
+e.
+ Inoltre le classi presentano delle operazioni per realizzare le interazioni
+ tra i vari oggetti.
+\end_layout
+
+\begin_layout Standard
+L'
+\series bold
+applicazione del pattern GRASP 
+\begin_inset Quotes fld
+\end_inset
+
+information expert
+\begin_inset Quotes frd
+\end_inset
+
+
+\series default
+ ha portato alla definizione di una nuova classe (ContenitoreStrutture),
+ dato che non era già presente una classe che avesse tutte le informazioni
+ sulle strutture.
+\end_layout
+
+\begin_layout Standard
+L'
+\series bold
+applicazione del pattern GRASP 
+\begin_inset Quotes fld
+\end_inset
+
+controller
+\begin_inset Quotes frd
+\end_inset
+
+
+\series default
+ ha portato alla definizione di una classe di tipo session controller (Reservati
+onHandler) che ha lo scopo di ricevere e controllare le richieste provenienti
+ dalle classi UI.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/Class Diagram progetto 1.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagramma della classi di alto livello
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Diagrammi di sequenza
+\end_layout
+
+\begin_layout Standard
+I sequence diagram mostrano gli scambi di messaggi e le interazioni tra
+ le varie classi al fine di realizzare un caso d'uso.
+ Sono stati realizzati utilizzando esclusivamente classi e operazioni presenti
+ nel diagramma delle classi.
+ Dunque, la costruzione di questi diagrammi ci ha permesso di raffinare
+ anche il class diagram aggiungendo nuove operazioni o relazioni qual'ora
+ fossero necessarie per il caso d'uso in questione.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/Crea prenotazione progetto.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagramma di sequenza crea prenotazione (progettazione)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/Gestisci Prenotazione Progetto.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagramma di sequenza Gestisci prenotazione (progettazione)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/Visualizza Prenotazioni progetto.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagramma di sequenza Visualizza prenotazioni (progettazione)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/Prenota Richiamo progetto.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Immagini/Prenota Richiamo progetto.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagramma di sequenza Prenota richiamo (progettazione)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Database
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/Entity Relationship Diagram1.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagramma ER database
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+DOCUMENTAZIONE DI IMPLEMENTAZIONE
+\end_layout
+
+\begin_layout Section
+Package diagram
+\end_layout
+
+\begin_layout Section
+Diagrammi di sequenza raffinati
+\end_layout
+
+\begin_layout Section
+Component diagram
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/Component Diagram1.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagramma dei componenti
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Manifestation
+\end_layout
+
+\begin_layout Section
+Deployment diagram
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/Deployment Diagram.png
+	width 17cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diagramma di distribuzione
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+DESCRIZIONE DEI TEST ESEGUITI
+\end_layout
+
+\begin_layout Section
+Test di unità
+\end_layout
+
+\begin_layout Section
+Test di integrazione
+\end_layout
+
+\begin_layout Section
+Test di sistema
+\end_layout
+
+\end_body
+\end_document

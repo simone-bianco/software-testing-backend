@@ -1,0 +1,954 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\use_default_options true
+\master tesi.lyx
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language italian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing double
+\use_hyperref true
+\pdf_bookmarks false
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3.5cm
+\topmargin 3cm
+\rightmargin 2cm
+\bottommargin 2.5cm
+\headheight 2cm
+\headsep 0.5cm
+\secnumdepth 1
+\tocdepth 1
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle empty
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Framework Utilizzati
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset href
+LatexCommand href
+name "Laravel"
+target "https://laravel.com/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Immagini/laravel.PNG
+	width 35line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Logo Laravel
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Laravel è un framework open source di tipo MVC scritto in PHP per lo sviluppo
+ di applicazioni web creato come derivazione di Symfony.
+\begin_inset Newline newline
+\end_inset
+
+Distribuito con licenza MIT, mantiene tutto il codice disponibile su GitHub
+ e viene indicato, in base al punteggio GitHub e StackOverflow, come il
+ framework PHP più popolare, seguito da Symfony, CodeIgniter e altri; ad
+ agosto 2014 risulta essere il progetto PHP più seguito su GitHub.
+\begin_inset Newline newline
+\end_inset
+
+Un framewok fornisce una struttura e un punto di partenza per creare la
+ propria applicazione, permettendo agli sviluppatori di scrollarsi la responsabi
+lità di gestire problematiche di basso livello e concentrandosi sulla logica
+ applicativa.
+\end_layout
+
+\begin_layout Subsection
+Perché Laravel?
+\end_layout
+
+\begin_layout Standard
+Laravel è stato scelto in base alle seguenti motivazioni (oltre a quelle
+ già esposte relativamente all'architettura):
+\end_layout
+
+\begin_layout Enumerate
+Espressività: è un framework molto espressivo con una sintassi chiara ed
+ elegante
+\end_layout
+
+\begin_layout Enumerate
+Semplicità di utilizzo: la formula utilizzata è easy to use, hard to master,
+ permette di scrivere applicazioni di una certa complessità anche chi ha
+ poca esperienza
+\end_layout
+
+\begin_layout Enumerate
+Documentazione ufficiale: è chiara, ricca di esempi e spiegazioni riguardo
+ ogni singolo aspetto del framework
+\end_layout
+
+\begin_layout Enumerate
+Documentazione non ufficiale: essendo uno dei framework più utilizzati al
+ mondo, vanta di decine di migliaia di issues risolte su forum non ufficiali
+ come Stack Overflow
+\end_layout
+
+\begin_layout Enumerate
+Librerie Open Source: sempre grazie alla sua diffusione, esistono migliaia
+ di librerie pubblicate e gratuitamente scaricabili da github per implementare
+ le funzionalità più disparate
+\end_layout
+
+\begin_layout Subsection
+Architettura del Framework
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Immagini/mvc-laravel.jpg
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Architettura MVC di Laravel
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Laravel presenta un'architettura di tipo MVC, dove però la model non esegue
+ mai l'update della view ma tale compito è sempre delegato ai controller
+ sotto esplicita richiesta.
+\begin_inset Newline newline
+\end_inset
+
+Si compone dei seguenti componenti:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+name "Routing"
+target "https://laravel.com/docs/8.x/routing"
+literal "false"
+
+\end_inset
+
+: è un registro (un semplice file php) all'interno del quale vengono registrati
+ i binding tra i metodi dei controller e le uri del sito
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+name "Controller"
+target "https://laravel.com/docs/8.x/controllers"
+literal "false"
+
+\end_inset
+
+: espone i metodi responsabili di renderizzare le pagine del frontend o
+ di eseguire operazioni come il salvataggio dei dati tramite model.
+ In particolare si dovrebbe seguire il seguente 
+\begin_inset CommandInset href
+LatexCommand href
+name "standard"
+target "https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/laravel-routing.PNG
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Standard per i Controller
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Alcune operazioni, come richieste di tipo Ajax, vanno inserite in dei metodi
+ ad hoc che non rientrano in queste categorie.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+name "Model"
+target "https://laravel.com/docs/8.x/eloquent"
+literal "false"
+
+\end_inset
+
+: laravel usa un 
+\begin_inset CommandInset href
+LatexCommand href
+name "ORM"
+target "https://it.wikipedia.org/wiki/Object-relational_mapping"
+literal "false"
+
+\end_inset
+
+ (Object Relational Mapper) per l'interazione con il database.
+ A ciascuna tabella del DB corrisponde una model che viene usata per interagire
+ con tale tabella, permettendo di inserire, estrarre, modificare e cancellare
+ i dati in essa contenuti.
+ La model non supporta un binding diretto con la view, tuttavia esiste la
+ possibilità di implementare un binding statico che permette al controller
+ di caricare direttamente la model scelta in base all'id specificato nell'url.
+\begin_inset Newline newline
+\end_inset
+
+In questa maniera, ad esempio, se vado su /prenotazioni/5/edit, il controller
+ già sa che deve caricare la model di tipo Reservation con il record nel
+ DB di ID 5.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+name "View"
+target "https://laravel.com/docs/8.x/views"
+literal "false"
+
+\end_inset
+
+: viste in html/phtml renderizzate sul frontend.
+ In questo progetto, tuttavia, è stato utilizzato un altro framework per
+ il frontend (Vue), del quale si parlerà più avanti
+\end_layout
+
+\begin_layout Subsection
+Ciclo di Vita di una Richiesta
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Immagini/request-lifecycle.PNG
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ciclo di Vita di una Richiesta
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+L'utente effettua la richiesta (ad esempio fa il submit di un form sul frontend)
+, la richiesta viene dispatchata al router dal Service Provider, individuando
+ così il metodo del controller da richiamare, prima che questa raggiunga
+ il controller deve passare per dei 
+\begin_inset CommandInset href
+LatexCommand href
+name "Middleware"
+target "https://laravel.com/docs/8.x/middleware"
+literal "false"
+
+\end_inset
+
+ assegnati (sempre all'interno del routing) che possono avere diversi compiti,
+ come quello di verificare che l'utente sia autenticato, o che abbia particolari
+ permessi.
+\begin_inset Newline newline
+\end_inset
+
+Se la richiesta passa il controllo del middleware arriva al controller,
+ il quale la elabora (nel caso del submit di un form, ad esempio, potrebbe
+ eseguire un salvataggio) ed invia la risposta al client, che potrebbe un
+ redirect o un payload contenente dati.
+\end_layout
+
+\begin_layout Subsection
+Dependency Injection
+\end_layout
+
+\begin_layout Standard
+Grazie ad un tool per gestire le classi chiamato 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset CommandInset href
+LatexCommand href
+name "Service Container"
+target "https://laravel.com/docs/8.x/container"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ è possibile effettuare la 
+\begin_inset CommandInset href
+LatexCommand href
+name "Dependency Injection"
+target "https://it.wikipedia.org/wiki/Dependency_injection"
+literal "false"
+
+\end_inset
+
+ delle dipendenze delle classi, 
+\begin_inset Quotes eld
+\end_inset
+
+iniettandole
+\begin_inset Quotes erd
+\end_inset
+
+ tramite il costruttore.
+\end_layout
+
+\begin_layout Subsection
+Database
+\end_layout
+
+\begin_layout Standard
+Per l'inizializzazione del database, laravel fornisce le seguenti classi:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+name "Migration"
+target "https://laravel.com/docs/8.x/migrations"
+literal "false"
+
+\end_inset
+
+: permettono di definire uno schema per le tabelle del database, in maniera
+ tale da definire in un solo package quale sarà la struttura del DB senza
+ necessità di modificarla manualmente.
+ Anche in fase di produzione, quando non è possibile ricreare il DB da 0,
+ è possibile definire delle migration che invece di creare tabelle, aggiornano
+ quelle già esistenti
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+name "Seeders"
+target "https://laravel.com/docs/8.x/seeding"
+literal "false"
+
+\end_inset
+
+: all'interno del database seeder è possibile gestire una logica di riempimento
+ iniziale del DB, ad esempio se ci sono dati immutabili che devono essere
+ caricati, oppure se si vuole testare l'applicazione con dati fittizzi
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+name "Factories"
+target "https://laravel.com/docs/8.x/seeding#using-model-factories"
+literal "false"
+
+\end_inset
+
+: permettono di definire una logica per riempire con dati casuali le model
+\end_layout
+
+\begin_layout Subsection
+Testing
+\end_layout
+
+\begin_layout Standard
+In laravel è possibile scrivere Unit Test e Feature Test per testare praticament
+e qualsiasi funzionalità implementata sia sul backend che sul frontend,
+ o sviluppare by testing.
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset href
+LatexCommand href
+name "Vue"
+target "https://vuejs.org/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Immagini/vue.png
+	width 35line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vue
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Vue.js è un framework JavaScript open-source in configurazione 
+\begin_inset CommandInset href
+LatexCommand href
+name "Model–view–viewmodel"
+target "https://it.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel"
+literal "false"
+
+\end_inset
+
+ per la creazione di interfacce utente e single-page applications.
+ Vue.js presenta un'architettura adottabile in modo incrementale che si concentra
+ sul rendering dichiarativo e sulla composizione dei componenti.
+ Le funzionalità avanzate richieste per applicazioni complesse come routing,
+ state management e strumenti di compilazione sono offerte tramite librerie
+ e pacchetti di supporto ufficialmente mantenuti, che comprendono Nuxt.js
+ tra le soluzioni più popolari.
+\end_layout
+
+\begin_layout Subsection
+Perché Vue?
+\end_layout
+
+\begin_layout Standard
+Le view statiche di Laravel sono state scartate a priori, in quanto non
+ ci consentirebbero di realizzare un'applicazione moderna, reactive e single
+ page (o per lo meno non in maniera semplice).
+ Assodato ciò, la scelta è ricaduta tra 3 principali competitors:
+\end_layout
+
+\begin_layout Itemize
+Angular: sviluppato da Google, basato su TypeScript (un framework JavaScript),
+ è il più difficile da apprendere
+\end_layout
+
+\begin_layout Itemize
+React: sviluppato da Facebook, una volta compresi i concetti di base la
+ curva di apprendimento rimane stabile
+\end_layout
+
+\begin_layout Itemize
+Vue: sviluppato da un ex dipendente google e basato su TypeScript, non ha
+ il supporto di grandi compagnie.
+ L'espressività è simile a quella di react, ma permette una maggiore customizzaz
+ione dei componenti
+\end_layout
+
+\begin_layout Standard
+La scelta è ricaduta su Vue per i seguenti motivi:
+\end_layout
+
+\begin_layout Enumerate
+La sua elevata personalizzazione facilita la curva di apprendimento
+\end_layout
+
+\begin_layout Enumerate
+E' il più flessibile tra i tre
+\end_layout
+
+\begin_layout Enumerate
+E' molto supportato dalla community in termini di soluzioni e librerie
+\end_layout
+
+\begin_layout Subsection
+Architettura
+\end_layout
+
+\begin_layout Standard
+Vue usa un'architettura di tipo View-Model-ViewModel
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Immagini/view-model-viewmodel.png
+	width 80line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Architettura Vue
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Model Layer: contiene i dati e la business logic, ad esempio se carichiamo
+ le prenotazioni, queste saranno contenute in un array o in un object definito
+ qui
+\end_layout
+
+\begin_layout Itemize
+View Layer: qui è definito il layout della pagina
+\end_layout
+
+\begin_layout Itemize
+ViewModel Layer: fa da intermediario agli altri 2 layer definendo come i
+ dati contenuti nelle model devono essere visualizzati sulle view, ad esempio
+ nel caso delle prenotazioni lo stato che viene passato dal server è in
+ inglese, nel layer intermedio possiamo tradurlo in italiano e mandare la
+ stringa tradotta alla view
+\end_layout
+
+\begin_layout Subsection
+Componenti
+\end_layout
+
+\begin_layout Standard
+L'elemento principale del framework è costituito dai componenti, che rappresenta
+no gli oggetti visualizzati sul frontend.
+ I componenti possono essere innestati e possono comunicare tra loro tramite
+ binding diretto, tanto che le pagine stesse sono dei componenti.
+\end_layout
+
+\begin_layout Subsubsection
+Ciclo di Vita di un Componente Vue
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Immagini/vue-lifecycle.png
+	width 50line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ciclo di Vita di un Componente Vue
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Quando un componente viene renderizzato passa per diversi stati, come mostrato
+ in figura, ed è possibile intervenire primo o dopo una qualsiasi di queste
+ fasi.
+ La renderizzazione del componente è completa quando arriva in 
+\begin_inset Quotes eld
+\end_inset
+
+mounted
+\begin_inset Quotes erd
+\end_inset
+
+, mentre si trova in questa fase alle variabili dichiarate è associato un
+ observer, in maniera tale che se il loro valore cambia, vengono aggiornati
+ i componenti che le utilizzano.
+\begin_inset Newline newline
+\end_inset
+
+Infine quando il componente viene eliminato (ad esempio quando viene renderizzat
+a un'altra pagina), vengono deallocati tutti gli elementi associati.
+\end_layout
+
+\begin_layout Subsection
+Comunicazione View-Server
+\end_layout
+
+\begin_layout Standard
+Vue è compatibile con qualsiasi framework di backend, in quanto i dati vengono
+ prelevati tramite chiamate API.
+ Normalmente la comunicazione tra View di Vue e Controller di Laravel avverrebbe
+ tramite chiamate API, avendo lo svantaggio di non poter utilizzare tutte
+ le funzionalità built-in di laravel riguardo la gestione delle richieste
+ HTTP.
+\begin_inset Newline newline
+\end_inset
+
+Per ovviare a questo problema, come verrà descritto nella prossima sezione,
+ si è utilizzato un Adapter che funge da intermediario tra Laravel e le
+ view di Vue, consentendoci di trattarle come se fossero pagine statiche
+ di Laravel in maniera trasparente.
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset href
+LatexCommand href
+name "InertiaJs"
+target "https://inertiajs.com/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Immagini/inertia.png
+	width 35line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vue
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+InertiaJs costituitsce un nuovo approccio rispetto allo sviluppo delle classiche
+ server-driven web app.
+ Permette infatti di creare applicazioni single page completamente renderizzabil
+i dal client senza la complessità delle moderne SPA facendo leva sul framework
+ lato server.
+\begin_inset Newline newline
+\end_inset
+
+Nel caso di Vue, come menzionato prima, sarebbe stato necessario accedere
+ ai dati tramite chiamate API al server, con Inertia è sufficiente effetuare
+ le chiamate con una sintassi ad hoc.
+ In particolare quando viene effettuata una richiesta (ad esempio tramite
+ inertia-link invece di href), viene effettuata una chiamata XHR al server,
+ questo riconosce che si tratta di una request Inertia e invece di returnare
+ una risposta HTML, come normalmente farebbe, returna una risposta JSON
+ con il codice precompilato JavaScript del componente (pagina) da renderizzare,
+ quindi senza effettuare un cambio di pagina sostituisce il vecchio componente
+ con quello nuovo.
+\begin_inset Newline newline
+\end_inset
+
+In questa maniera, dato che le chiamate XHR vengono trattate come normali
+ richieste HTTP, non perdiamo tutti i vantaggi e le funzionalità offerte
+ da service providers e middleware.
+\end_layout
+
+\end_body
+\end_document

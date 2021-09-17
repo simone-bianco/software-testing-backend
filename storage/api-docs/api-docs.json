@@ -1,0 +1,500 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Endpoints",
+        "description": "API per interfacciarsi con l'applicazione Android",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/get-structures-by-region/{region}": {
+            "get": {
+                "tags": [
+                    "reservation"
+                ],
+                "summary": "Prendi Strutture",
+                "description": "Restituisce tutte le strutture di una regione",
+                "operationId": "getStructuresByRegion",
+                "parameters": [
+                    {
+                        "name": "Nome Regione",
+                        "in": "path",
+                        "description": "Nome di una regione italiana",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "UTF-8"
+                        },
+                        "example": "Abruzzo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array di strutture prelevato con success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "structures": {
+                                            "type": "json",
+                                            "example": "['Struttura A', 'Struttura B', ...]"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "ok"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Effettua Login",
+                "description": "Effettua il login restituendo il token",
+                "operationId": "loginPost",
+                "requestBody": {
+                    "description": "Info richieste per il login",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "email",
+                                        "example": "marco.predoni@email.it"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "secret1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login effettuato con successo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "169|12ls5OwUVOJ3fCQEmdQehejq5QM5PCjFA4HCLSuP"
+                                        },
+                                        "patient": {
+                                            "type": "json",
+                                            "example": "{'first_name': 'Marco', ...}"
+                                        },
+                                        "reservation": {
+                                            "type": "json",
+                                            "example": "{'date': '2021-09-13', ...}"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Errore interno del server",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "validation"
+                                        },
+                                        "errors": {
+                                            "type": "json",
+                                            "example": "{'email': ['length': 'email troppo lunga']}"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Email o password errati",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email o password errati"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "401"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/get-last-reservation-by-patient-email/{email}": {
+            "get": {
+                "tags": [
+                    "reservation"
+                ],
+                "summary": "Prende ultima prenotazione",
+                "description": "Prende la prenotazione più recente in base all'email del paziente",
+                "operationId": "getLastReservationByPatientEmail",
+                "parameters": [
+                    {
+                        "name": "Email Paziente",
+                        "in": "path",
+                        "description": "Email valida di un paziente del quale si vuole prendere la reservation",
+                        "required": true,
+                        "schema": {
+                            "type": "email",
+                            "format": "UTF-8"
+                        },
+                        "example": "marc.predoni@email.it"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dati ritirati con successo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "reservation": {
+                                            "type": "json",
+                                            "example": "{'date': '2021-06-16', ...}"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "ok"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Errore interno del server",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "validation"
+                                        },
+                                        "errors": {
+                                            "type": "json",
+                                            "example": "{'email': ['length': 'email troppo lunga']}"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Email o password errati",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email o password errati"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "401"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/registerPost": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Effettua Registrazione",
+                "description": "Effettua la registrazione del paziente",
+                "operationId": "registerPost",
+                "requestBody": {
+                    "description": "Info richieste per la registrazione",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "first_name",
+                                    "last_name",
+                                    "email",
+                                    "password",
+                                    "date_of_birth",
+                                    "fiscal_code",
+                                    "mobile_phone",
+                                    "city",
+                                    "address",
+                                    "cap"
+                                ],
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "marco"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "predoni"
+                                    },
+                                    "email": {
+                                        "type": "email",
+                                        "example": "marco.predoni@email.it"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "secret1234"
+                                    },
+                                    "date_of_birth": {
+                                        "type": "date:Y-m-d",
+                                        "example": "2021-05-16"
+                                    },
+                                    "fiscal_code": {
+                                        "type": "string",
+                                        "example": "MRCPRD95F839G"
+                                    },
+                                    "mobile_phone": {
+                                        "type": "string",
+                                        "example": "3951302553"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "milano"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "via napoleone 57"
+                                    },
+                                    "cap": {
+                                        "type": "string",
+                                        "example": "80931"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Registrazione effettuata con successo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Errore interno del server",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "validation"
+                                        },
+                                        "errors": {
+                                            "type": "json",
+                                            "example": "{'email': ['length': 'email troppo lunga']}"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reservation": {
+            "post": {
+                "tags": [
+                    "reservation"
+                ],
+                "summary": "Crea prenotazione",
+                "description": "Crea una prenotazione per il paziente",
+                "operationId": "reservationPost",
+                "requestBody": {
+                    "description": "Info richieste per creare la prenotazione",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "first_name",
+                                    "last_name",
+                                    "email",
+                                    "password",
+                                    "date_of_birth",
+                                    "fiscal_code",
+                                    "mobile_phone",
+                                    "city",
+                                    "address",
+                                    "cap"
+                                ],
+                                "properties": {
+                                    "patient_id": {
+                                        "type": "integer",
+                                        "example": "54"
+                                    },
+                                    "structure_id": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "date": {
+                                        "type": "date:Y-m-d",
+                                        "example": "2021-05-16"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Prenotazione effettuata con successo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Errore interno del server",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "validation"
+                                        },
+                                        "errors": {
+                                            "type": "json",
+                                            "example": "{'patient_id': ['exists': 'id paziente non valido']}"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "500"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

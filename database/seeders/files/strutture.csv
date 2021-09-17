@@ -1,0 +1,9 @@
+area,codice_NUTS1,codice_NUTS2,codice_regione_ISTAT,denominazione_struttura,nome_area,tipologia
+ABR,ITF,ITF1,13,"AVEZZANO-SULMONA-L'AQUILA",Abruzzo,Ospeda
+CAM,ITF,ITF3,15,A.S.L. CASERTA,Campania,Ospedaliero
+SAR,ITG,ITG2,20,AMBULATORI PO LANUSEI,Sardegna,Territorialeliero
+VEN,ITH,ITH3,5,PSR MOBY DICK,Veneto,Territoriale
+PIE,ITC,ITC1,1,CENTRO DIURNO - ARONA,Piemonte,Territoriale
+PUG,ITF,ITF4,16,CONSULTORIO FAM. UGGIANO,Puglia,Territoriale
+BAS,ITF,ITF5,17,POLIAMB. PRES. OSP. TRICARICO,Basilicata,Territoriale
+CAM,ITF,ITF3,15,A.S.L. NAPOLI 1 CENTRO,Campania,Ospedaliero

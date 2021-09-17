@@ -1,0 +1,499 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\use_default_options true
+\master tesi.lyx
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language italian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing double
+\use_hyperref true
+\pdf_bookmarks false
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3.5cm
+\topmargin 3cm
+\rightmargin 2cm
+\bottommargin 2.5cm
+\headheight 2cm
+\headsep 0.5cm
+\secnumdepth 1
+\tocdepth 1
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle empty
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Software Utilizzati
+\end_layout
+
+\begin_layout Section
+IDE
+\end_layout
+
+\begin_layout Subsection
+PhpStorm
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/phpstormLogo.PNG
+	width 30line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Logo PhpStorm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+PhpStorm è un ambiente di sviluppo integrato (IDE) commerciale multi-piattaforma
+ pensato per PHP, sviluppato dalla società ceca JetBrains.
+ PhpStorm fornisce un editor per PHP, HTML e JavaScript con analisi del
+ codice on-the-fly, prevenzione degli errori e refactoring automatici per
+ codice PHP e JavaScript.
+ L'autocompletamento del codice in PhpStorm supporta PHP dalla versione
+ 5.3 in poi (progetti moderni e legacy), inclusi generatori, coroutine, la
+ parola chiave finally, elenchi in foreach, namespace, chiusure, traits
+ e array a sintassi breve.
+ Include un editor SQL completo coi risultati di query modificabili.
+\begin_inset Newline newline
+\end_inset
+
+PhpStorm è scritto in Java.
+ Gli utenti possono estendere l'IDE installando plugin creati per PhpStorm
+ o scrivendone di propri.
+ Il software comunica anche con origini esterne come XDebug.
+\begin_inset Newline newline
+\end_inset
+
+Tutte le funzionalità disponibili in WebStorm sono a loro volta incluse
+ in PhpStorm, in aggiunta al supporto a PHP e database.
+ WebStorm viene fornito con i plug-in JavaScript preinstallati (come per
+ Node.js).
+\begin_inset Newline newline
+\end_inset
+
+Si è dunque usato questo IDE per lo sviluppo del codice relativo al backend
+ e al frontend dell'applicazione.
+\end_layout
+
+\begin_layout Subsection
+Android Studio
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/androidstudio.png
+	width 30line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Logo Android Studio
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Android Studio è un ambiente di sviluppo integrato (IDE) per lo sviluppo
+ per la piattaforma Android.
+ È stato annunciato il 16 maggio 2013 in occasione della conferenza Google
+ I/O tenuta dal Product Manager Google, Katherine Chou.
+ Android Studio è disponibile gratuitamente sotto licenza Apache 2.0.
+\begin_inset Newline newline
+\end_inset
+
+Basato sul software di JetBrains IntelliJ IDEA, Android Studio è stato progettat
+o specificamente per lo sviluppo di applicazioni Android.
+ È disponibile il download su Windows, Mac OS X e Linux, e sostituisce gli
+ Android Development Tools (ADT) di Eclipse, diventando l'IDE primario di
+ Google per lo sviluppo nativo di applicazioni Android.
+\end_layout
+
+\begin_layout Subsection
+Composer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/composer.jpg
+	width 35line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Logo Composer
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Composer è un gestore di pacchetti a livello applicativo per il linguaggio
+ di programmazione PHP, che fornisce un formato standard per la gestione
+ delle dipendenze dei progetti PHP e delle librerie richieste.
+\begin_inset Newline newline
+\end_inset
+
+Composer viene eseguito da riga di comando e si occupa di installare le
+ dipendenze (ad esempio le librerie) dell'applicazione.
+ Consente inoltre agli utenti di installare applicazioni PHP disponibili
+ su "Packagist", il suo repository principale di pacchetti.
+ Fornisce inoltre funzionalità di autoload per le librerie che ne prevedono
+ il supporto, per facilitare l'utilizzo di codice di terze parti.
+\end_layout
+
+\begin_layout Subsection
+XAMPP
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/xampp.jpg
+	width 42line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Logo XAMPP
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+XAMPP è una piattaforma software multipiattaforma e libera costituita da
+ Apache HTTP Server, il database MariaDB e tutti gli strumenti necessari
+ per utilizzare i linguaggi di programmazione PHP e Perl.
+ Il nome è un acronimo dei software sopra citati (la X sta per x-platform,
+ l'abbreviazione di cross-platform in lingua inglese ovvero multipiattaforma).
+\begin_inset Newline newline
+\end_inset
+
+Nel nostro caso XAMPP è stato utilizzato per configurare e avviare il database
+ MySql sul quale si appoggia l'applicazione.
+\end_layout
+
+\begin_layout Subsection
+Vue Devtool
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/vue-devtool.PNG
+	width 35line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Logo Vue Devtool
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Vue Devtool è un plugin per Chrome che consente di ispezionare le pagine
+ create con Vue visualizzando i singoli componenti e le variabili contenute
+ al loro interno.
+ Chiaramente tale ispezione funziona solo quando il progetto è compilato
+ in fase di developement.
+\end_layout
+
+\begin_layout Subsection
+Visual Paradigm
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Immagini/visualParadigm.PNG
+	width 35line%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Logo Visual Paradigm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Visual Paradigm è un tool volto alla modellazione UML.
+ E' stato utilizzato per produrre la documentazione relativa al progetto.
+\end_layout
+
+\end_body
+\end_document
