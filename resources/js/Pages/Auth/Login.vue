@@ -20,6 +20,7 @@
                   </div>
                 </div>
                 <v-text-field
+                    id="email"
                     placeholder="Inserisci email"
                     :error-messages="emailErrors.concat(getValidationErrors(this.form.errors, 'email*'))"
                     class="mt-6"
@@ -29,12 +30,12 @@
                     @input="$v.form.email.$touch()"
                     @blur="$v.form.email.$touch()" />
                 <v-text-field
+                    id="password"
                     placeholder="Inserisci password"
                     :error-messages="passwordErrors.concat(getValidationErrors(this.form.errors, 'password*'))"
                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="showPassword ? 'text' : 'password'"
                     @click:append="showPassword = !showPassword"
-                    name="password"
                     class="mt-6"
                     v-model="form.password"
                     label="Password"
@@ -52,6 +53,7 @@
                   </inertia-link>
 
                   <v-btn
+                      id="login"
                       :loading="false"
                       v-blur
                       :disabled="false"

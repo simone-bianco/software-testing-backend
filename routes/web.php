@@ -3,7 +3,9 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FirstLoginController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ResponsibleController;
 use App\Http\Controllers\TwoFAController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,25 +20,10 @@ use Inertia\Inertia;
 |
 */
 
-//Route::get('/', function () {
-//    return Inertia::render('Welcome', [
-//        'canLogin' => Route::has('login'),
-//        'canRegister' => Route::has('register'),
-//        'laravelVersion' => Application::VERSION,
-//        'phpVersion' => PHP_VERSION,
-//    ]);
-//});
 
-Route::group(['middleware' => ['throttle:30,1'], 'name' => 'guester'], function () {
+Route::group(['middleware' => ['throttle:30,1']], function () {
     Route::get('/', function () {
-        if (request()->user()->responsible) {
-            return redirect()->to(route('dashboard.index'));
-        }
-        return Inertia::render('Auth/Login', [
-            'canResetPassword' => true,
-            'status' => '',
-            'error' => '',
-        ]);
+        return redirect()->route('login');
     });
 });
 
@@ -62,6 +49,12 @@ Route::group(['middleware' => ['auth', 'first_login', 'role', '2fa', 'throttle:3
 
     Route::get('/prenotazioni', [ReservationController::class, 'index'])
         ->name('reservations.index');
+
+    Route::get('/responsabile/crea', [ResponsibleController::class, 'create'])
+        ->name('responsible.create');
+
+    Route::post('/responsabile/salva', [ResponsibleController::class, 'store'])
+        ->name('responsible.store');
 
     Route::get('/register', function () {
         echo "Pagina non ancora implementata";

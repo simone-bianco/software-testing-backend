@@ -162,6 +162,7 @@ export default {
       items: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard', route: 'dashboard.index', method: 'get' },
         { title: 'Visualizza Prenotazioni', icon: 'mdi-book-variant', route: 'reservations.index', method: 'get' },
+        { title: 'Registra Responsabile', icon: 'mdi-book-variant', route: 'responsible.create', method: 'get' },
       ],
       showingNavigationDropdown: false,
     }

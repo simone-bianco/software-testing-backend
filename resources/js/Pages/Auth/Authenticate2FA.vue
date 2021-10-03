@@ -10,25 +10,35 @@
                 <v-text-field
                     v-model="form.code"
                     label="Codice Generato"
-                    :rules="generatedCodeRules"
                     hide-details="auto"
                     class="ml-4"
                 ></v-text-field>
                 <errors-catcher class="ml-4" :bag="form.errors" :exclude-mode="true" :wildcards="[]" />
-                <v-btn
-                    :loading="loading"
-                    v-blur
-                    :disabled="loading"
-                    color="#212529"
-                    class="mt-7 ml-4 white--text"
-                    @click="submit">
-                  Completa Registrazione
-                  <v-icon
-                      right
-                      dark>
-                    mdi-login
-                  </v-icon>
-                </v-btn>
+                <div class="flex mt-7 ml-4">
+                  <v-btn
+                      :loading="loading"
+                      v-blur
+                      :disabled="loading"
+                      color="#212529"
+                      class="white--text"
+                      @click="submit">
+                    Conferma
+                    <v-icon
+                        right
+                        dark>
+                      mdi-login
+                    </v-icon>
+                  </v-btn>
+                  <v-btn
+                      :loading="loading"
+                      v-blur
+                      :disabled="loading"
+                      color="#212529"
+                      class="ml-4 white--text"
+                      @click="logout">
+                    Logout
+                  </v-btn>
+                </div>
               </form>
             </v-card>
           </div>
@@ -115,7 +125,11 @@ export default {
           .post(this.route('2fa.completeLogin'), {
             preserveScroll: true
           })
-    }
+    },
+
+    logout() {
+      this.$inertia.post(route('logout'));
+    },
   }
 }
 </script>
