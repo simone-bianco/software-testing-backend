@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\Helper\PatientCreator;
+use App\Models\Patient;
 use App\Models\Reservation;
 use App\Models\Responsible;
 use App\Models\Structure;
@@ -21,7 +21,6 @@ abstract class SecurityTestCase extends TestCase
     use RefreshDatabase;
 
     protected TestDatabaseSeeder $testDatabaseSeeder;
-    protected PatientCreator $patientCreator;
     protected ReservationRepository $reservationRepository;
 
     protected Structure $firstStructure;
@@ -37,7 +36,6 @@ abstract class SecurityTestCase extends TestCase
     {
         parent::setUp();
         $this->testDatabaseSeeder = $this->app->make(TestDatabaseSeeder::class);
-        $this->patientCreator = $this->app->make(PatientCreator::class);
         $this->reservationRepository = $this->app->make(ReservationRepository::class);
         Artisan::call('migrate:refresh');
         // Riempio il DB con i dati di test
@@ -88,13 +86,15 @@ abstract class SecurityTestCase extends TestCase
     protected function createReservations()
     {
         $structures = Structure::all();
-        foreach ($structures as $structure) {
+        $patients = Patient::all();
+        $this->assertGreaterThanOrEqual($structures->count(), $patients->count());
+        foreach ($structures as $index => $structure) {
             // Scelgo lo stock e mi assicuro che la quantità sia 1
             $stock = $structure->stocks()->firstOrFail();
             $stock->quantity = 1;
             $stock->saveOrFail();
             // Creo un paziente
-            $patient = $this->patientCreator->execute();
+            $patient = $patients->get($index);
             $reservation = Reservation::make([
                 'date' => Carbon::now()->addDays(10),
                 'patient_id' => $patient->id,

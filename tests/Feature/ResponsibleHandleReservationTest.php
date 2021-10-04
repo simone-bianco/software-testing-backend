@@ -3,57 +3,102 @@
 namespace Tests\Feature;
 
 use App\Helper\PatientCreator;
+use App\Models\Batch;
+use App\Models\Patient;
 use App\Models\Reservation;
 use App\Models\Responsible;
 use App\Models\Stock;
 use App\Models\Structure;
 use App\Models\Vaccine;
 use App\Repositories\ReservationRepository;
-use Artisan;
 use Carbon\Carbon;
-use Database\Seeders\TestDatabaseSeeder;
+use Database\Seeders\Test\BatchSeeder;
+use Database\Seeders\Test\PatientsSeeder;
+use Database\Seeders\Test\ResponsibleSeeder;
+use Database\Seeders\Test\StocksSeeder;
+use Database\Seeders\Test\StructuresSeeder;
+use Database\Seeders\VaccinesSeeder;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Validation\ValidationException;
+use Session;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use Throwable;
 
 class ResponsibleHandleReservationTest extends TestCase
 {
     use RefreshDatabase;
 
     protected ReservationRepository $reservationRepository;
-    protected PatientCreator $patientCreator;
+    protected $structuresSeeder;
+    protected $vaccinesSeeder;
+    protected $batchSeeder;
+    protected $responsibleSeeder;
+    protected $stockSeeder;
+    protected $patientsSeeder;
 
     /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     * @throws \Throwable
+     * @throws Throwable
+     * @throws ValidationException
+     */
+    protected function reseedDatabase()
+    {
+        $this->refreshDatabase();
+        $this->structuresSeeder->run(1);
+        $this->assertCount(1, Structure::all());
+        $this->vaccinesSeeder->run();
+        $this->assertCount(4, Vaccine::all());
+        $this->batchSeeder->run(1);
+        $this->assertCount(4, Batch::all());
+        $this->stockSeeder->run(1);
+        $this->assertEquals(Structure::all()->count() * Batch::all()->count(), Stock::all()->count());
+        $this->responsibleSeeder->run(true);
+        $this->assertCount(1, Responsible::all());
+        $this->patientsSeeder->run(1);
+        $this->assertCount(1, Patient::all());
+    }
+
+    /**
+     * @throws BindingResolutionException
+     * @throws Throwable
      */
     public function setUp() : void {
         parent::setUp();
         $this->reservationRepository = $this->app->make(ReservationRepository::class);
-        $this->patientCreator = $this->app->make(PatientCreator::class);
-        $dbSeeder = $this->app->make(TestDatabaseSeeder::class);
-        $this->refreshDatabase();
-        Artisan::call('migrate:refresh');
-        $dbSeeder->run();
+        $this->structuresSeeder = $this->app->make(StructuresSeeder::class);
+        $this->vaccinesSeeder = $this->app->make(VaccinesSeeder::class);
+        $this->batchSeeder = $this->app->make(BatchSeeder::class);
+        $this->responsibleSeeder = $this->app->make(ResponsibleSeeder::class);
+        $this->stockSeeder = $this->app->make(StocksSeeder::class);
+        $this->patientsSeeder = $this->app->make(PatientsSeeder::class);
     }
 
     /**
-     * @throws \Illuminate\Validation\ValidationException
-     * @throws \Throwable
+     * @throws ValidationException
+     * @throws Throwable
      */
     public function testAcceptReservation()
     {
-        $this->withoutExceptionHandling();
+        $this->reseedDatabase();
 
-        $structure = Structure::firstOrFail();
+        $structure = Structure::first();
+        $this->assertNotNull($structure);
 
         /** @var Responsible $responsible */
-        $responsible = $structure->responsibles()->firstOrFail();
+        $responsible = $structure->responsibles()->first();
+        $this->assertNotNull($responsible);
 
-        $reservation = $this->getPendingReservationOrCreate($structure);
+        $patient = Patient::first();
+        $this->assertNotNull($patient);
+
+        $reservation = $this->createReservation($structure, $patient);
+        $this->assertNotNull($reservation);
         $stock = $reservation->stock;
+        $this->assertNotNull($reservation);
 
         $this->be($responsible->account->user);
+        Session::put('2fa', true);
         $response = $this->call(
             'PUT',
             "/prenotazione/{$reservation->id}/update",
@@ -72,32 +117,45 @@ class ResponsibleHandleReservationTest extends TestCase
     }
 
     /**
-     * @throws \Illuminate\Validation\ValidationException
-     * @throws \Throwable
+     * @throws ValidationException
+     * @throws Throwable
      */
     public function testAcceptReservationAndChangeVaccine()
     {
-        $this->withoutExceptionHandling();
+        $this->reseedDatabase();
 
-        $structure = Structure::firstOrFail();
+        $structure = Structure::first();
+        $this->assertNotNull($structure);
 
         /** @var Responsible $responsible */
-        $responsible = $structure->responsibles()->firstOrFail();
+        $responsible = $structure->responsibles()->first();
+        $this->assertNotNull($responsible);
 
-        $reservation = $this->getPendingReservationOrCreate($structure);
+        $patient = Patient::first();
+        $this->assertNotNull($patient);
+
+        $reservation = $this->createReservation($structure, $patient);
+        $this->assertNotNull($reservation);
         $stock = $reservation->stock;
+        $this->assertNotNull($stock);
 
-        $anotherVaccine = Vaccine::where('id', '!=', $stock->batch->vaccine->id)
-            ->firstOrFail();
+        $anotherVaccine = Vaccine::where('id', '!=', $stock->batch->vaccine->id)->first();
+        $this->assertNotNull($anotherVaccine);
 
         /** @var Stock $differentAvailableStock */
         $differentAvailableStock = $structure->getMaxStock([$anotherVaccine]);
+        $this->assertNotNull($differentAvailableStock);
         $differentAvailableStockQty = $differentAvailableStock->quantity;
+        $this->assertGreaterThanOrEqual(1, $differentAvailableStockQty);
 
+        $user = $responsible->account->user;
+        $this->assertNotNull($user);
         $this->be($responsible->account->user);
+        Session::put('2fa', true);
+        $this->assertAuthenticatedAs($user);
         $response = $this->call(
             'PUT',
-            "/prenotazione/{$reservation->id}/update",
+            route('reservations.update', $reservation->id),
             array_merge(
                 $reservation->toArray(),
                 ['vaccine' => $anotherVaccine->name, 'state' => Reservation::CONFIRMED_STATE]
@@ -117,22 +175,26 @@ class ResponsibleHandleReservationTest extends TestCase
     }
 
     /**
-     * @throws \Illuminate\Validation\ValidationException
-     * @throws \Throwable
+     * @throws ValidationException
+     * @throws Throwable
      */
     public function testCompleteReservationAndCreateRecall()
     {
-        $this->withoutExceptionHandling();
+        $this->reseedDatabase();
 
         $structure = Structure::firstOrFail();
 
         /** @var Responsible $responsible */
         $responsible = $structure->responsibles()->firstOrFail();
 
-        $newReservation = $this->getPendingReservationOrCreate($structure);
+        $patient = Patient::first();
+        $this->assertNotNull($patient);
+
+        $newReservation = $this->createReservation($structure, $patient);
         $reservation = $this->reservationRepository->confirmAndSave($newReservation);
 
         $this->be($responsible->account->user);
+        Session::put('2fa', true);
         $response = $this->call(
             'PUT',
             "/prenotazione/{$reservation->id}/update",
@@ -173,21 +235,26 @@ class ResponsibleHandleReservationTest extends TestCase
     }
 
     /**
-     * @throws \Illuminate\Validation\ValidationException
-     * @throws \Throwable
+     * @throws ValidationException
+     * @throws Throwable
      */
     public function testRefuseReservation()
     {
-        $this->withoutExceptionHandling();
+        $this->reseedDatabase();
 
         $structure = Structure::firstOrFail();
 
         /** @var Responsible $responsible */
-        $responsible = $structure->responsibles()->firstOrFail();
+        $responsible = $structure->responsibles()->first();
+        $this->assertNotNull($responsible);
 
-        $reservation = $this->getPendingReservationOrCreate($structure);
+        $patient = Patient::first();
+        $this->assertNotNull($patient);
+
+        $reservation = $this->createReservation($structure, $patient);
 
         $this->be($responsible->account->user);
+        Session::put('2fa', true);
         $response = $this->call(
             'PUT',
             "/prenotazione/{$reservation->id}/update",
@@ -215,33 +282,24 @@ class ResponsibleHandleReservationTest extends TestCase
 
     /**
      * @param  Structure  $structure
+     * @param  Patient  $patient
      * @return Reservation
-     * @throws \Illuminate\Validation\ValidationException
-     * @throws \Throwable
+     * @throws Throwable
+     * @throws ValidationException
      */
-    protected function getPendingReservationOrCreate(Structure $structure): Reservation
+    protected function createReservation(Structure $structure, Patient $patient): Reservation
     {
         /** @var Stock $availableStock */
-        $availableStock = $structure->stocks()->where('quantity', '>', 0)->firstOrFail();
+        $availableStock = $structure->stocks()->where('quantity', '>', 0)->first();
+        $this->assertNotNull($availableStock);
 
-        /** @var Reservation $reservation */
-        $reservation = $availableStock
-            ->reservations()
-            ->where('state', '=', Reservation::PENDING_STATE)
-            ->first();
-
-        if (!$reservation) {
-            $newPatient = $this->patientCreator->execute();
-            return $this->reservationRepository->createAndStockDecrement(
-                Reservation::factory()->make([
-                    'date' => Carbon::now()->addDay(),
-                    'patient_id' => $newPatient->id,
-                    'stock_id' => $availableStock->id
-                ])
-            );
-        }
-
-        return $reservation;
+        return $this->reservationRepository->createAndStockDecrement(
+            Reservation::factory()->make([
+                'date' => Carbon::now()->addDay(),
+                'patient_id' => $patient->id,
+                'stock_id' => $availableStock->id
+            ])
+        );
     }
 
     protected function stockIsSameAfterConfirm(Stock $stock)

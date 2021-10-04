@@ -10,7 +10,7 @@ use Database\Seeders\Test\PatientsSeeder as PatientsSeeder;
 use Illuminate\Database\Seeder;
 use Throwable;
 
-class TestDatabaseSeeder extends Seeder
+class HandleReservationDatabaseSeeder extends Seeder
 {
     protected VaccinesSeeder $vaccineSeeder;
     protected StructuresSeeder $structuresSeeder;
@@ -49,11 +49,11 @@ class TestDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->structuresSeeder->run();
+        $this->structuresSeeder->run(1);
         $this->vaccineSeeder->run();
-        $this->batchSeeder->run(2);
-        $this->stocksSeeder->run();
+        $this->batchSeeder->run(1);
+        $this->stocksSeeder->run(2);
         $this->responsibleSeeder->run();
-        $this->patientsSeeder->run(2);
+        $this->patientsSeeder->run(1);
     }
 }

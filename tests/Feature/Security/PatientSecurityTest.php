@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Security;
+namespace Tests\Feature\Security;
 
 use App\Models\Patient;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -20,8 +20,8 @@ class PatientSecurityTest extends SecurityTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->patient = $this->patientCreator->execute();
-        $this->anotherPatient = $this->patientCreator->execute();
+        $this->patient = Patient::findOrFail(1);
+        $this->anotherPatient = Patient::findOrFail(2);
     }
 
     public function testPatientWithValidTokenCannotGetReservationOfAnotherPatient()

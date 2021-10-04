@@ -3,6 +3,7 @@
 namespace Database\Seeders\Test;
 
 use App\Models\Batch;
+use App\Models\Stock;
 use App\Models\Structure;
 use App\Repositories\StockRepository;
 use Database\Factories\StockFactory;

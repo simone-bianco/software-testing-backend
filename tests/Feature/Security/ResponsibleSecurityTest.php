@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Unit\Security;
+namespace Tests\Feature\Security;
 
+use App\Models\Patient;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Response;
 use Session;
@@ -107,7 +108,7 @@ class ResponsibleSecurityTest extends SecurityTestCase
                 'email' => $this->unauthorizedResponsible->email,
                 'password' => 'test'
             ]
-        )->assertStatus(\Illuminate\Http\Response::HTTP_UNAUTHORIZED);
+        )->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     public function testResponsibleWithValidTokenCannotCallApi()
@@ -126,7 +127,7 @@ class ResponsibleSecurityTest extends SecurityTestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . $token->plainTextToken
         ])->getJson(
-            "/api/get-last-reservation-by-patient-email/{$this->patientCreator->execute()->email}"
+            sprintf("/api/get-last-reservation-by-patient-email/%s", Patient::findOrFail(1)->email)
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
 
         $this->withHeaders([
@@ -153,7 +154,7 @@ class ResponsibleSecurityTest extends SecurityTestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . 'invalid_token'
         ])->getJson(
-            "/api/get-last-reservation-by-patient-email/{$this->patientCreator->execute()->email}"
+            sprintf("/api/get-last-reservation-by-patient-email/%s", Patient::findOrFail(1)->email)
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
 
         $this->withHeaders([

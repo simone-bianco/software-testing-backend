@@ -1,14 +1,10 @@
 <?php
 
-namespace Tests\Unit\Security;
+namespace Tests\Feature\Security;
 
-use App\Models\User;
-use App\Repositories\UserRepository;
-use Database\Factories\UserFactory;
-use Illuminate\Contracts\Container\BindingResolutionException;
+use App\Models\Patient;
 use Illuminate\Http\Response;
 use Tests\SecurityTestCase;
-use Throwable;
 
 class AuthSecurityTest extends SecurityTestCase
 {
@@ -71,7 +67,7 @@ class AuthSecurityTest extends SecurityTestCase
         $this->withHeaders([
             'Accept' => 'application/json'
         ])->getJson(
-            "/api/get-last-reservation-by-patient-email/{$this->patientCreator->execute()->email}"
+            sprintf("/api/get-last-reservation-by-patient-email/%s", Patient::findOrFail(1)->email)
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
 
         $this->withHeaders([

@@ -59,7 +59,6 @@ class FirstLoginController extends Controller
             $user->email,
             $user->google2fa_secret
         );
-        Storage::disk('public')->put('qr.svg', $imageQR);
 
         return Inertia::render("Auth/RegisterQRCode", ["qr" => $imageQR, 'secret' => $secret]);
     }

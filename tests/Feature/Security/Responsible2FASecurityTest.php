@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Unit\Security;
+namespace Tests\Feature\Security;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Http\Response;
 use Tests\SecurityTestCase;
 use Throwable;
 

@@ -26,17 +26,14 @@ class StructuresSeeder extends Seeder
      * @throws ValidationException
      * @throws Throwable
      */
-    public function run()
+    public function run(int $numberOfStructures = 2)
     {
-        $this->structureRepository->save(StructureFactory::new()->make([
-            'name' => 'Struttura Test 1',
-            'region' => 'campania',
-            'capacity' => 24,
-        ]));
-        $this->structureRepository->save(StructureFactory::new()->make([
-            'name' => 'Struttura Test 2',
-            'region' => 'abruzzo',
-            'capacity' => 24,
-        ]));
+        for ($i = 0; $i < $numberOfStructures; $i++) {
+            $this->structureRepository->save(StructureFactory::new()->make([
+                'name' => "Struttura Test $i",
+                'region' => 'campania',
+                'capacity' => 24,
+            ]));
+        }
     }
 }
