@@ -13,7 +13,7 @@
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">./app/Repositories</directory>
+            <directory suffix=".php">./app</directory>
         </include>
         <report>
             <html outputDirectory="tests/reports/coverage"/>
