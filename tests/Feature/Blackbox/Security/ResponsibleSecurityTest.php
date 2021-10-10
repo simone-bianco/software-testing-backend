@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Security;
+namespace Tests\Feature\Blackbox\Security;
 
 use App\Models\Patient;
 use Illuminate\Contracts\Container\BindingResolutionException;

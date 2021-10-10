@@ -1,8 +1,9 @@
 <?php
 
-namespace Tests\Feature\Security;
+namespace Tests\Feature\Blackbox\Security;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Session;
 use Tests\SecurityTestCase;
 use Throwable;
 
@@ -21,7 +22,7 @@ class Responsible2FASecurityTest extends SecurityTestCase
     {
         $user = $this->unauthorizedResponsible->account->user;
         $this->be($user);
-        \Session::put('2fa', false);
+        Session::put('2fa', false);
         $structure = $user->responsible->structure;
         $protectedReservation = $this->getFirstReservation($structure);
         $response = $this->call(
@@ -35,7 +36,7 @@ class Responsible2FASecurityTest extends SecurityTestCase
     {
         $user = $this->unauthorizedResponsible->account->user;
         $this->be($user);
-        \Session::put('2fa', false);
+        Session::put('2fa', false);
         $structure = $user->responsible->structure;
         $protectedReservation = $this->getFirstReservation($structure);
         $response = $this->call(
@@ -49,7 +50,7 @@ class Responsible2FASecurityTest extends SecurityTestCase
     {
         $user = $this->unauthorizedResponsible->account->user;
         $this->be($user);
-        \Session::put('2fa', false);
+        Session::put('2fa', false);
         $structure = $user->responsible->structure;
         $response = $this->call(
             'POST',
@@ -63,7 +64,7 @@ class Responsible2FASecurityTest extends SecurityTestCase
     {
         $user = $this->unauthorizedResponsible->account->user;
         $this->be($user);
-        \Session::put('2fa', false);
+        Session::put('2fa', false);
         $structure = $user->responsible->structure;
         $response = $this->call(
             'POST',

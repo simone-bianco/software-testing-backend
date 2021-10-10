@@ -49,11 +49,11 @@ class TestDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->structuresSeeder->run();
+        $this->structuresSeeder->run(2);
         $this->vaccineSeeder->run();
         $this->batchSeeder->run(2);
         $this->stocksSeeder->run();
-        $this->responsibleSeeder->run();
+        $this->responsibleSeeder->run(2);
         $this->patientsSeeder->run(2);
     }
 }

@@ -18,6 +18,10 @@ use Throwable;
 /**
  * Test per verificare il funzionamento di ciascuna operazione che l'operatore sanitario può effettuare sulla
  * prenotazione
+ * @covers \App\Http\Controllers\ReservationController
+ * @covers \App\Repositories\ReservationRepository
+ * @covers \App\Models\Reservation
+ * @covers \App\Models\Stock
  */
 final class ResponsibleHandleReservationTest extends ReservationTestCase
 {
@@ -38,6 +42,11 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
         $this->responsible = $responsible;
         $this->patient = Patient::first();
         $this->reservation = $this->createReservation($this->structure, $this->patient);
+        /** Login */
+        $user = $this->responsible->account->user;
+        $this->assertNotNull($user);
+        $this->be($user);
+        Session::put('2fa', true);
     }
 
     protected function assertPreConditions(): void
@@ -47,6 +56,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
         $this->assertNotNull($this->responsible);
         $this->assertNotNull($this->patient);
         $this->assertNotNull($this->reservation);
+        $this->assertAuthenticatedAs($this->responsible->account->user);
     }
 
     /**
@@ -59,6 +69,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
         $this->responsible = null;
         $this->patient = null;
         $this->reservation = null;
+        Session::flush();
     }
 
     /**
@@ -72,8 +83,6 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
         $stock = $this->reservation->stock;
         $this->assertNotNull($stock);
 
-        $this->be($this->responsible->account->user);
-        Session::put('2fa', true);
         $response = $this->call(
             'PUT',
             "/prenotazione/{$this->reservation->id}/update",
@@ -113,11 +122,6 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
         $differentAvailableStockQty = $differentAvailableStock->quantity;
         $this->assertGreaterThanOrEqual(1, $differentAvailableStockQty);
 
-        $user = $this->responsible->account->user;
-        $this->assertNotNull($user);
-        $this->be($this->responsible->account->user);
-        Session::put('2fa', true);
-        $this->assertAuthenticatedAs($user);
         $response = $this->call(
             'PUT',
             route('reservations.update', $this->reservation->id),
@@ -147,10 +151,18 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
      */
     public function testCompleteReservationAndCreateRecall()
     {
-        $this->reservation = $this->reservationRepository->confirmAndSave($this->reservation);
+        //Accetta reservation
+        $response = $this->call(
+            'PUT',
+            "/prenotazione/{$this->reservation->id}/update",
+            array_merge(
+                $this->reservation->toArray(),
+                ['vaccine' => $this->reservation->stock->batch->vaccine->name, 'state' => Reservation::CONFIRMED_STATE]
+            ));
+        $response->assertStatus(Response::HTTP_FOUND);
 
-        $this->be($this->responsible->account->user);
-        Session::put('2fa', true);
+        //Completa reservation
+        $response->assertStatus(Response::HTTP_FOUND);
         $response = $this->call(
             'PUT',
             "/prenotazione/{$this->reservation->id}/update",
@@ -164,29 +176,38 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
         $this->assertEquals(Reservation::COMPLETED_STATE, $updatedReservation->state);
         $this->reservationsAreEqual($this->reservation, $updatedReservation);
         $this->assertEquals($this->reservation->stock_id, $updatedReservation->stock_id);
-
         $this->stockIsSameAfterComplete($this->reservation->stock);
 
         /** @var Vaccine $recallVaccine */
         $recallVaccine = $this->structure->stocks()->where('quantity', '>', 0)->firstOrFail()->batch->vaccine;
         $recallStock = $this->structure->getMaxStock([$recallVaccine]);
-        $recall = $this->reservationRepository->createRecallAndStockDecrement(
-            $updatedReservation->patient,
-            Carbon::now()->addDays(100),
-            "12:00",
-            $recallVaccine,
-            $this->structure
-        );
 
+        //Crea recall
+        $response = $this->call(
+            'POST',
+            "/prenotazione/salva",
+            [
+                'patient' => $this->patient->id,
+                'date' => Carbon::now()->addDays(100),
+                'time' => '12:00',
+                'vaccine' => $recallVaccine->name,
+                'structure' => $this->structure->name
+            ]);
+        $response->assertStatus(Response::HTTP_FOUND);
+
+        $recall = Reservation::where('patient_id', '=', $this->patient->id)
+            ->orderBy('date', 'desc')
+            ->first();
+        $updatedRecallStock = Stock::whereId($recallStock->id)->first();
+
+        /** Post Condizioni */
+        $this->assertNotNull($recall);
         $this->assertEquals(Reservation::CONFIRMED_STATE, $recall->state);
         $this->assertEquals($recallVaccine->name, $recall->stock->batch->vaccine->name);
         $this->assertEquals($updatedReservation->patient_id, $recall->patient_id);
         $this->assertEquals($recallStock->id, $recall->stock_id);
         $this->assertEquals("12:00", $recall->time->format('H:i'));
         $this->assertEquals(Carbon::now()->addDays(100)->format('Y-m-d'), $recall->date->format('Y-m-d'));
-
-        $updatedRecallStock = Stock::whereId($recallStock->id)->firstOrFail();
-
         $this->assertEquals($recallStock->quantity - 1, $updatedRecallStock->quantity);
     }
 
@@ -198,8 +219,6 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
      */
     public function testRefuseReservation()
     {
-        $this->be($this->responsible->account->user);
-        Session::put('2fa', true);
         $response = $this->call(
             'PUT',
             "/prenotazione/{$this->reservation->id}/update",
