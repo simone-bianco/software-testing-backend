@@ -26,7 +26,7 @@ class StructuresSeeder extends Seeder
      * @throws ValidationException
      * @throws Throwable
      */
-    public function run(int $numberOfStructures = 2)
+    public function run(int $numberOfStructures = 1)
     {
         for ($i = 0; $i < $numberOfStructures; $i++) {
             $this->structureRepository->save(StructureFactory::new()->make([

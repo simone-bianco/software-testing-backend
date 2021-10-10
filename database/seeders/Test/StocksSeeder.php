@@ -37,7 +37,7 @@ class StocksSeeder extends Seeder
     /**
      * @throws Throwable
      */
-    public function run(int $defaultQty = 0)
+    public function run(int $defaultQty = 1)
     {
         $structures = Structure::all();
         $batches = Batch::all();

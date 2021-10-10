@@ -29,7 +29,7 @@ class ResponsibleSeeder extends Seeder
     /**
      * @throws Throwable
      */
-    public function run(bool $twoFAComplete = false)
+    public function run(bool $twoFAComplete = true)
     {
         $structures = Structure::all();
         foreach ($structures as $index => $structure) {

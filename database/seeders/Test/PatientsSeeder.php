@@ -31,7 +31,7 @@ class PatientsSeeder extends Seeder
      * @throws Throwable
      * @throws ValidationException
      */
-    public function run(int $numberOfPatientsPerStructure = 3)
+    public function run(int $numberOfPatientsPerStructure = 1)
     {
         $structures = Structure::all();
         foreach ($structures as $structureIndex => $structure) {

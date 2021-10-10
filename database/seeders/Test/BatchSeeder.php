@@ -11,7 +11,7 @@ class BatchSeeder extends Seeder
     /**
      * @throws Throwable
      */
-    public function run(int $numberOfBatchesPerVaccine = 3)
+    public function run(int $numberOfBatchesPerVaccine = 1)
     {
         $vaccines = Vaccine::all();
         foreach ($vaccines as $vaccine){
