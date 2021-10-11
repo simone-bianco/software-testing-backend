@@ -148,49 +148,4 @@ class PatientSecurityTest extends SecurityTestCase
             []
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
-
-    public function testPatientCannotVisitBackoffice()
-    {
-        $this->be($this->patient->account->user)->assertAuthenticated();
-
-        $this->call(
-            'GET',
-            route('dashboard.index')
-        )->assertStatus(Response::HTTP_FORBIDDEN);
-
-        $this->call(
-            'GET',
-            route('reservations.index')
-        )->assertStatus(Response::HTTP_FORBIDDEN);
-
-        $this->call(
-            'GET',
-            route('reservations.edit', ['reservation' => 1])
-        )->assertStatus(Response::HTTP_FORBIDDEN);
-
-        $this->call(
-            'GET',
-            route('reservations.create', ['reservation' => 1])
-        )->assertStatus(Response::HTTP_FORBIDDEN);
-
-        $this->call(
-            'POST',
-            route('reservations.poll')
-        )->assertStatus(Response::HTTP_FORBIDDEN);
-
-        $this->call(
-            'POST',
-            route('reservations.store', ['reservation' => 1])
-        )->assertStatus(Response::HTTP_FORBIDDEN);
-
-        $this->call(
-            'POST',
-            route('reservations.busytimes')
-        )->assertStatus(Response::HTTP_FORBIDDEN);
-
-        $this->call(
-            'PUT',
-            route('reservations.update', ['reservation' => 1])
-        )->assertStatus(Response::HTTP_FORBIDDEN);
-    }
 }

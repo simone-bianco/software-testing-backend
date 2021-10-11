@@ -43,19 +43,18 @@ abstract class SecurityTestCase extends TestCase
         // Creo una reservation per ogni struttura
         $this->createReservations();
         // Verifico le precondizioni, cioè che entrambe le strutture abbiano una reservation
-        $this->assertDatabaseCount('reservations', 2);
         $structures = Structure::all();
-        foreach ($structures as $structure) {
-            $reservation = $this->getFirstReservation($structure);
-            $this->assertNotNull($reservation);
-            $this->assertInstanceOf(Reservation::class, $reservation);
-        }
         $this->firstStructure = $structures->first();
         $this->otherStructures = Structure::where('id', '!=', $this->firstStructure->id)->get()->all();
         $this->unauthorizedResponsible = $this->firstStructure->responsibles()->first();
         $unauthorizedResponsibleUser = $this->unauthorizedResponsible->account->user;
         $unauthorizedResponsibleUser->first_login = false;
         $unauthorizedResponsibleUser->save();
+    }
+
+    public function assertPreConditions(): void
+    {
+        $this->assertDatabaseCount('reservations', 2);
         $this->assertNotNull($this->unauthorizedResponsible);
         $this->assertInstanceOf(Responsible::class, $this->unauthorizedResponsible);
         $this->assertEquals($this->unauthorizedResponsible->structure->id, $this->firstStructure->id);
