@@ -13,7 +13,6 @@ return [
     'mobile_phone' => 'regex:/(^[+]{,1}[0-9]{1,3}[ ]{0,1}[0-9]{1,3}[ ]{0,1}[0-9]{1,3}$)/',
     'batch_code' => 'regex:/(^[a-zA-Z0-9]{5}$)/',
     'reservation_code' => 'regex:/(^[a-zA-Z0-9]{32}$)/',
-    'password' => 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$#!.%*?&])[A-Za-z\d@$#!.%*?&]{8,}$/',
     'vaccine_name' => "regex:/(^[a-zA-Z0-9]{2}[a-zA-Z '-,&]{1,30}$)/",
 ];
 

@@ -6,8 +6,10 @@ use App\Models\Structure;
 use App\Repositories\StructureRepository;
 use Database\Factories\StructureFactory;
 use File;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Seeder;
 use Str;
+use Throwable;
 
 class StructuresSeeder extends Seeder
 {
@@ -25,8 +27,8 @@ class StructuresSeeder extends Seeder
 
     /**
      * @param  int|null  $maxStructures
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws \Throwable
+     * @throws FileNotFoundException
+     * @throws Throwable
      */
     public function run(?int $maxStructures = null)
     {
