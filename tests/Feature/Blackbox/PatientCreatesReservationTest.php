@@ -50,7 +50,6 @@ class PatientCreatesReservationTest extends ReservationTestCase
         $this->assertNotNull($this->responsible);
         $this->assertNotNull($this->patient);
         $this->assertNotNull($this->token);
-        Session::flush();
     }
 
     protected function tearDown(): void
@@ -81,6 +80,7 @@ class PatientCreatesReservationTest extends ReservationTestCase
         $this->assertDatabaseCount('reservations', 1);
         $this->assertNotNull($reservation);
         $this->assertEquals($this->patient->id, $reservation->patient_id);
+        $this->assertEquals('08:00', $reservation->time->format('H:i'));
         $this->assertEquals($this->structure->id, $reservation->stock->structure_id);
         $this->assertEquals($reservationDay, $reservation->date->format('Y-m-d'));
     }

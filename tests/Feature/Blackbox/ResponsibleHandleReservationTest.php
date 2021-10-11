@@ -43,20 +43,29 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
         $this->patient = Patient::first();
         $this->reservation = $this->createReservation($this->structure, $this->patient);
         /** Login */
+        //Devo loggare come responsabile sanitario, prendo l'user associato all'unico responsabile memorizzato
         $user = $this->responsible->account->user;
+        //Verico che l'utente esista
         $this->assertNotNull($user);
+        //Simulo il login tramite l'utente
         $this->be($user);
+        //Il responsabile sanitario deve necessariamente eseguire l'autenticazione tramite 2fa
+        //TODO::forse sarebbe meglio simulare per bene anche questo
         Session::put('2fa', true);
     }
 
     protected function assertPreConditions(): void
     {
         parent::assertPreConditions();
+        //Mi assicuro che i dati siano stati caricati correttamente
         $this->assertNotNull($this->structure);
         $this->assertNotNull($this->responsible);
         $this->assertNotNull($this->patient);
         $this->assertNotNull($this->reservation);
+        //Mi assicuro che l'utente loggato nella sessione sia quello giusto
         $this->assertAuthenticatedAs($this->responsible->account->user);
+        //Mi assicuro che la 2FA sia stata effettuata
+        $this->assertTrue(Session::get('2fa'));
     }
 
     /**
@@ -65,14 +74,18 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
     public function tearDown(): void
     {
         parent::tearDown();
+        //Resetto i dati caricati
         $this->structure = null;
         $this->responsible = null;
         $this->patient = null;
         $this->reservation = null;
+        //Resetto la sessione
         Session::flush();
     }
 
     /**
+     * Test per verificare la funzionalità tramite la quale un responsabile sanitario accetta la prenotazione da parte
+     * di un paziente
      * @group reservation
      * @group responsible
      * @group blackbox
@@ -80,40 +93,37 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
      */
     public function testAcceptReservation()
     {
-        $stock = $this->reservation->stock;
-        $this->assertNotNull($stock);
-
+        //Effettuo la richiesta al controller della prenotazione. Il vaccino scelto non è cambiato, è lo stesso che era stato
+        //assegnato dal sistema, mentre l'operazione selezionata è "conferma"
         $response = $this->call(
             'PUT',
             "/prenotazione/{$this->reservation->id}/update",
             array_merge(
                 $this->reservation->toArray(),
-                ['vaccine' => $stock->batch->vaccine->name, 'state' => Reservation::CONFIRMED_STATE]
+                ['vaccine' => $this->reservation->stock->batch->vaccine->name, 'state' => Reservation::CONFIRMED_STATE]
             ));
-        $response->assertStatus(Response::HTTP_FOUND);
+        $response->assertRedirect(route('reservations.index'));
 
+        //Prelevo la prenotazione aggiornata
         $updatedReservation = $this->reservationRepository->get($this->reservation->code);
 
+        //Verifico le post condizioni
         /** Post Conditions */
+        $this->stockIsSameAfterConfirm($this->reservation->stock);
         $this->assertEquals(Reservation::CONFIRMED_STATE, $updatedReservation->state);
         $this->reservationsAreEqual($this->reservation, $updatedReservation);
         $this->assertEquals($this->reservation->stock_id, $updatedReservation->stock_id);
-        $this->stockIsSameAfterConfirm($stock);
     }
 
     /**
      * @group reservation
      * @group responsible
      * @group blackbox
-     * @afterClass testAcceptReservation
      * @throws Throwable
      */
     public function testAcceptReservationAndChangeVaccine()
     {
-        $stock = $this->reservation->stock;
-        $this->assertNotNull($stock);
-
-        $anotherVaccine = Vaccine::where('id', '!=', $stock->batch->vaccine->id)->first();
+        $anotherVaccine = Vaccine::where('id', '!=', $this->reservation->stock->batch->vaccine->id)->first();
         $this->assertNotNull($anotherVaccine);
 
         /** @var Stock $differentAvailableStock */
@@ -129,7 +139,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
                 $this->reservation->toArray(),
                 ['vaccine' => $anotherVaccine->name, 'state' => Reservation::CONFIRMED_STATE]
             ));
-        $response->assertStatus(Response::HTTP_FOUND);
+        $response->assertRedirect(route('reservations.index'));
 
         $updatedReservation = $this->reservationRepository->get($this->reservation->code);
         $this->assertEquals(Reservation::CONFIRMED_STATE, $updatedReservation->state);
@@ -138,9 +148,9 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
         $this->assertEquals($differentAvailableStock->id, $updatedReservation->stock_id);
 
         $updatedDifferentAvailableStock = Stock::findOrFail($differentAvailableStock->id);
-        $updatedStock = Stock::findOrFail($stock->id);
+        $updatedStock = Stock::findOrFail($this->reservation->stock->id);
         $this->assertEquals($differentAvailableStockQty - 1, $updatedDifferentAvailableStock->quantity);
-        $this->assertEquals($stock->quantity + 1, $updatedStock->quantity);
+        $this->assertEquals($this->reservation->stock->quantity + 1, $updatedStock->quantity);
     }
 
     /**
@@ -159,7 +169,11 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
                 $this->reservation->toArray(),
                 ['vaccine' => $this->reservation->stock->batch->vaccine->name, 'state' => Reservation::CONFIRMED_STATE]
             ));
-        $response->assertStatus(Response::HTTP_FOUND);
+
+        //Verifico che la prenotazione è stata confermata con successo
+        $confirmedReservation = Reservation::whereId($this->reservation->id)->first();
+        $this->assertNotNull($confirmedReservation);
+        $this->assertEquals(Reservation::CONFIRMED_STATE, $confirmedReservation->state);
 
         //Completa reservation
         $response->assertStatus(Response::HTTP_FOUND);
@@ -170,7 +184,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
                 $this->reservation->toArray(),
                 ['vaccine' => $this->reservation->stock->batch->vaccine->name, 'state' => Reservation::COMPLETED_STATE]
             ));
-        $response->assertStatus(Response::HTTP_FOUND);
+        $response->assertRedirect(route('reservations.edit', $this->reservation->id));
 
         $updatedReservation = $this->reservationRepository->get($this->reservation->code);
         $this->assertEquals(Reservation::COMPLETED_STATE, $updatedReservation->state);
@@ -193,7 +207,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
                 'vaccine' => $recallVaccine->name,
                 'structure' => $this->structure->name
             ]);
-        $response->assertStatus(Response::HTTP_FOUND);
+        $response->assertRedirect(route('reservations.index'));
 
         $recall = Reservation::where('patient_id', '=', $this->patient->id)
             ->orderBy('date', 'desc')
@@ -226,7 +240,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
                 $this->reservation->toArray(),
                 ['vaccine' => $this->reservation->stock->batch->vaccine->name, 'state' => Reservation::CANCELED_STATE]
             ));
-        $response->assertStatus(Response::HTTP_FOUND);
+        $response->assertRedirect(route('reservations.index'));
 
         $updatedReservation = $this->reservationRepository->get($this->reservation->code);
 

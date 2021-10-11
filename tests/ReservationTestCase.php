@@ -3,11 +3,7 @@
 namespace Tests;
 
 use App\Models\Batch;
-use App\Models\Patient;
-use App\Models\Responsible;
-use App\Models\Stock;
 use App\Models\Structure;
-use App\Models\Vaccine;
 use App\Repositories\ReservationRepository;
 use Database\Seeders\Test\BatchSeeder;
 use Database\Seeders\Test\PatientsSeeder;
@@ -54,6 +50,7 @@ abstract class ReservationTestCase extends TestCase
      */
     protected function reseedDatabase()
     {
+        //Eseguo i seeder
         $this->structuresSeeder->run();
         $this->vaccinesSeeder->run();
         $this->batchSeeder->run();
@@ -64,11 +61,12 @@ abstract class ReservationTestCase extends TestCase
 
     protected function assertPreConditions(): void
     {
-        $this->assertCount(1, Structure::all());
-        $this->assertCount(4, Vaccine::all());
-        $this->assertCount(4, Batch::all());
-        $this->assertEquals(Structure::all()->count() * Batch::all()->count(), Stock::all()->count());
-        $this->assertCount(1, Responsible::all());
-        $this->assertCount(1, Patient::all());
+        //Mi assicuro che la quantità di dati inserita corrisponda a quella aspettata
+        $this->assertDatabaseCount('structures', 1);
+        $this->assertDatabaseCount('vaccines', 4);
+        $this->assertDatabaseCount('batches', 4);
+        $this->assertDatabaseCount('stocks', Structure::all()->count() * Batch::all()->count());
+        $this->assertDatabaseCount('responsibles', 1);
+        $this->assertDatabaseCount('patients', 1);
     }
 }
