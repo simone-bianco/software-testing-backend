@@ -21,6 +21,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Throwable;
 use Validator;
 
@@ -341,6 +342,28 @@ class AndroidApiController extends Controller
     }
 
     /**
+     * @param $requestData
+     * @return array
+     * @throws ValidationException
+     */
+    protected function reservationPostValidation($requestData): array
+    {
+        return Validator::make(
+            $requestData,
+            [
+                'date' => ['required', 'date_format:Y-m-d', 'after:tomorrow'],
+                'patient_id' => [
+                    'required',
+                    'integer',
+                    'gt:0',
+                    Rule::exists('patients', 'id'),
+                ],
+                'structure_id' => ['required', 'integer', 'gt:0', Rule::exists('structures', 'id')],
+            ]
+        )->validate();
+    }
+
+    /**
      * @OA\Post(
      *     path="/reservation",
      *     summary="Crea prenotazione",
@@ -387,6 +410,7 @@ class AndroidApiController extends Controller
     public function reservationPost(Request $request): JsonResponse
     {
         $this->validateUser();
+        $this->reservationPostValidation($request->toArray());
 
         $patientId = $request->post('patient_id');
         $patient = Patient::whereId($patientId)->firstOrFail();
@@ -397,12 +421,14 @@ class AndroidApiController extends Controller
         $id = $request->post('structure_id');
         $stock_id = Structure::whereId($id)->firstOrFail()->getMaxStock($patient->getAllowedVaccines())->id;
 
-        $this->reservationRepository->createAndStockDecrement(
-            Reservation::factory()->make([
+        $reservation = Reservation::factory()->make([
                 'patient_id' => $patientId,
                 'date' => $request->post('date'),
                 'stock_id' => $stock_id
-            ])
+            ]);
+
+        $this->reservationRepository->createAndStockDecrement(
+            $reservation
         );
 
         return response()->json(["message" => "success", "code" => 200]);

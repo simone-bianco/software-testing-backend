@@ -3,6 +3,7 @@
 namespace Tests\Feature\Blackbox\Security;
 
 use App\Models\Patient;
+use Carbon\Carbon;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Response;
 use Tests\SecurityTestCase;
@@ -33,7 +34,7 @@ class PatientSecurityTest extends SecurityTestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . $token->plainTextToken
         ])->getJson(
-            "/api/get-last-reservation-by-patient-email/{$this->anotherPatient->email}"
+            "/api/get-last-reservation-by-patient-email/{$this->anotherPatient->email}",
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
@@ -104,7 +105,11 @@ class PatientSecurityTest extends SecurityTestCase
             'Authorization' => 'Bearer ' . $token->plainTextToken
         ])->postJson(
             "/api/reservation",
-            ['patient_id' => $this->anotherPatient->id]
+            [
+                'patient_id' => $this->anotherPatient->id,
+                'date' => Carbon::now()->addDays(5)->format('Y-m-d'),
+                'structure_id' => $this->firstStructure->id
+            ]
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
@@ -115,7 +120,11 @@ class PatientSecurityTest extends SecurityTestCase
             'Authorization' => 'Bearer ' . 'invalid_token'
         ])->postJson(
             "/api/reservation",
-            []
+            [
+                'patient_id' => $this->anotherPatient->id,
+                'date' => Carbon::now()->addDays(5)->format('Y-m-d'),
+                'structure_id' => $this->firstStructure->id
+            ]
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
@@ -125,6 +134,11 @@ class PatientSecurityTest extends SecurityTestCase
             'Accept' => 'application/json'
         ])->postJson(
             "/api/reservation",
+            [
+                'patient_id' => $this->anotherPatient->id,
+                'date' => Carbon::now()->addDays(5)->format('Y-m-d'),
+                'structure_id' => $this->firstStructure->id
+            ]
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
@@ -135,7 +149,11 @@ class PatientSecurityTest extends SecurityTestCase
             'Authorization' => 'Bearer ' . 'invalid_token'
         ])->postJson(
             "/api/reservation",
-            []
+            [
+                'patient_id' => $this->patient->id,
+                'date' => Carbon::now()->addDays(5)->format('Y-m-d'),
+                'structure_id' => $this->firstStructure->id
+            ]
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
@@ -145,7 +163,11 @@ class PatientSecurityTest extends SecurityTestCase
             'Accept' => 'application/json'
         ])->postJson(
             "/api/reservation",
-            []
+            [
+                'patient_id' => $this->patient->id,
+                'date' => Carbon::now()->addDays(5)->format('Y-m-d'),
+                'structure_id' => $this->firstStructure->id
+            ]
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 }
