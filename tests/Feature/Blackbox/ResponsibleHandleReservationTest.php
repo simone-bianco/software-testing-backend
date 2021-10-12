@@ -18,10 +18,6 @@ use Throwable;
 /**
  * Test per verificare il funzionamento di ciascuna operazione che l'operatore sanitario può effettuare sulla
  * prenotazione
- * @covers \App\Http\Controllers\ReservationController
- * @covers \App\Repositories\ReservationRepository
- * @covers \App\Models\Reservation
- * @covers \App\Models\Stock
  */
 final class ResponsibleHandleReservationTest extends ReservationTestCase
 {

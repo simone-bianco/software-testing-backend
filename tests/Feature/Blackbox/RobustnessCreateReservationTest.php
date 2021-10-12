@@ -14,12 +14,8 @@ use Throwable;
 
 /**
  * Test sulle chiamate API da parte del paziente per la creazione delle reservation
- * @covers \App\Http\Controllers\ReservationController
- * @covers \App\Repositories\ReservationRepository
- * @covers \App\Models\Reservation
- * @covers \App\Models\Stock
  */
-class DecisionTableReservationTest extends ReservationTestCase
+class RobustnessCreateReservationTest extends ReservationTestCase
 {
     protected ?Structure $structure = null;
     protected ?Responsible $responsible = null;
@@ -109,16 +105,16 @@ class DecisionTableReservationTest extends ReservationTestCase
             [1, Carbon::now()->startOfDay(), 1],
             //Data nulla #10
             [1, null, 1],
-            //Data vuota #11
-            [1, "", 1],
-            //ID struttura non valido (nullo) #12
+            //ID struttura non valido (nullo) #11
             [1, Carbon::now()->addDays(5), null],
-            //ID struttura non valido (stringa) #13
-            [1, Carbon::now()->addDays(5), "struttura"],
-            //ID struttura non valido (zero) #14
+            //ID struttura non valido (stringa) #12
+            [1, Carbon::now()->addDays(5), "wrong ID"],
+            //ID struttura non valido (zero) #13
             [1, Carbon::now()->addDays(5), 0],
-            //ID di una struttura non esistente #15
+            //ID di una struttura non esistente #14
             [1, Carbon::now()->addDays(5), 100],
+            //ID struttura non valido (nullo) #15
+            [1, Carbon::now()->addDays(5)->format('d/m/Y'), null],
         ];
     }
 }

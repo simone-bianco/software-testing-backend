@@ -9,17 +9,12 @@ use App\Models\Structure;
 use App\Repositories\PatientRepository;
 use Carbon\Carbon;
 use Laravel\Sanctum\NewAccessToken;
-use Session;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\ReservationTestCase;
 use Throwable;
 
 /**
  * Test sulle chiamate API da parte del paziente per la creazione delle reservation
- * @covers \App\Http\Controllers\ReservationController
- * @covers \App\Repositories\ReservationRepository
- * @covers \App\Models\Reservation
- * @covers \App\Models\Stock
  */
 class PatientCreatesReservationTest extends ReservationTestCase
 {
