@@ -7,8 +7,8 @@
             <v-card class="pa-7">
               <v-card-title>Registrazione Obbligatoria 2FA</v-card-title>
               <div class="w-full flex items-center align-center justify-center">
-                <div class="w-6/12 h-30 mt-10">
-                  <v-img src="/uploads/qr.svg" alt="" />
+                <div class="h-30">
+                  <div v-html="this.qr"></div>
                 </div>
               </div>
               <form @submit.prevent="submit">

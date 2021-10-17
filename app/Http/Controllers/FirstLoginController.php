@@ -57,7 +57,8 @@ class FirstLoginController extends Controller
         $imageQR = $google2fa->getQRCodeInline(
             'Piattaforma Vaccini SAD',
             $user->email,
-            $user->google2fa_secret
+            $user->google2fa_secret,
+            250
         );
 
         return Inertia::render("Auth/RegisterQRCode", ["qr" => $imageQR, 'secret' => $secret]);

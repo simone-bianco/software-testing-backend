@@ -55,8 +55,6 @@ class ReservationRepositoryCoverageTest extends ReservationTestCase
             $this->fail('Lanciata eccezione errata');
         } catch (Exception $exception) {
             $this->assertNotNull($exception);
-            $reservation = Reservation::findOrFail($reservation->id);
-            $this->assertNotEquals(Reservation::COMPLETED_STATE, $reservation->state);
         }
     }
 

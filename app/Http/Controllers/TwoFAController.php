@@ -5,25 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Repositories\ResponsibleRepository;
 use App\Repositories\UserRepository;
-use Auth;
-use BaconQrCode\Common\Mode;
-use BaconQrCode\Encoder\QrCode;
-use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
-use Inertia\Response;
-use PragmaRX\Google2FA\Exceptions\IncompatibleWithGoogleAuthenticatorException;
-use PragmaRX\Google2FA\Exceptions\InvalidCharactersException;
-use PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException;
-use PragmaRX\Google2FA\Support\Constants;
-use PragmaRX\Google2FAQRCode\Exceptions\MissingQrCodeServiceException;
 use PragmaRX\Google2FAQRCode\Google2FA;
-use Request;
-use Storage;
-use Str;
 use Validator;
 
 class TwoFAController extends Controller
@@ -44,12 +30,12 @@ class TwoFAController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function authenticate(\Illuminate\Http\Request $request)
+    public function authenticate(Request $request)
     {
         return Inertia::render("Auth/Authenticate2FA");
     }
 
-    public function completeLogin(\Illuminate\Http\Request $request)
+    public function completeLogin(Request $request)
     {
         $google2fa = (new Google2FA());
         $otp = $request->get('code');
