@@ -136,7 +136,8 @@ class ReservationRepositoryCoverageTest extends ReservationTestCase
         $patient = Patient::firstOrFail();
         $reservation = $this->createReservation($structure, $patient);
         $this->reservationRepository->confirmAndSave($reservation);
-        $this->reservationRepository->completeAndSave($reservation);
+        $reservation = $this->reservationRepository->completeAndSave($reservation);
+        $this->assertEquals(Reservation::COMPLETED_STATE, $reservation->state);
         try {
             $this->reservationRepository->createRecallAndStockDecrement(
                 $patient, Carbon::now()->subDays(2), '12:00', Vaccine::firstOrFail(), $structure

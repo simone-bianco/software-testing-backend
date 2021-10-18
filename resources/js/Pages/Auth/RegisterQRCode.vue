@@ -28,6 +28,7 @@
                     :disabled="loading"
                     color="#212529"
                     class="mt-7 ml-4 white--text"
+                    dusk="confirm"
                     @click="submit">
                   Completa Registrazione
                   <v-icon

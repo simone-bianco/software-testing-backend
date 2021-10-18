@@ -96,7 +96,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
             "/prenotazione/{$this->reservation->id}/update",
             array_merge(
                 $this->reservation->toArray(),
-                ['vaccine' => $this->reservation->stock->batch->vaccine->name, 'state' => Reservation::CONFIRMED_STATE]
+                ['vaccine' => "Pfizer", 'state' => Reservation::CONFIRMED_STATE]
             ));
         $response->assertRedirect(route('reservations.index'));
 
@@ -133,7 +133,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
             route('reservations.update', $this->reservation->id),
             array_merge(
                 $this->reservation->toArray(),
-                ['vaccine' => $anotherVaccine->name, 'state' => Reservation::CONFIRMED_STATE]
+                ['vaccine' => "Moderna", 'state' => Reservation::CONFIRMED_STATE]
             ));
         $response->assertRedirect(route('reservations.index'));
 
@@ -163,7 +163,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
             "/prenotazione/{$this->reservation->id}/update",
             array_merge(
                 $this->reservation->toArray(),
-                ['vaccine' => $this->reservation->stock->batch->vaccine->name, 'state' => Reservation::CONFIRMED_STATE]
+                ['vaccine' => "Pfizer", 'state' => Reservation::CONFIRMED_STATE]
             ));
 
         //Verifico che la prenotazione è stata confermata con successo
@@ -178,7 +178,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
             "/prenotazione/{$this->reservation->id}/update",
             array_merge(
                 $this->reservation->toArray(),
-                ['vaccine' => $this->reservation->stock->batch->vaccine->name, 'state' => Reservation::COMPLETED_STATE]
+                ['vaccine' => "Pfizer", 'state' => Reservation::COMPLETED_STATE]
             ));
         $response->assertRedirect(route('reservations.edit', $this->reservation->id));
 
@@ -189,7 +189,8 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
         $this->stockIsSameAfterComplete($this->reservation->stock);
 
         /** @var Vaccine $recallVaccine */
-        $recallVaccine = $this->structure->stocks()->where('quantity', '>', 0)->firstOrFail()->batch->vaccine;
+        $recallVaccine = $this->structure->stocks()->where('quantity', '>', 0)
+            ->firstOrFail()->batch->vaccine;
         $recallStock = $this->structure->getMaxStock([$recallVaccine]);
 
         //Crea recall
@@ -234,7 +235,7 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
             "/prenotazione/{$this->reservation->id}/update",
             array_merge(
                 $this->reservation->toArray(),
-                ['vaccine' => $this->reservation->stock->batch->vaccine->name, 'state' => Reservation::CANCELED_STATE]
+                ['vaccine' => "Pfizer", 'state' => Reservation::CANCELED_STATE]
             ));
         $response->assertRedirect(route('reservations.index'));
 

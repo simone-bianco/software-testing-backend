@@ -27,7 +27,6 @@ class PatientSecurityTest extends SecurityTestCase
 
     public function testPatientWithValidTokenCannotGetReservationOfAnotherPatient()
     {
-        $this->clearTokens($this->patient->account->user);
         $token = $this->patient->account->user->createToken('app-token', [$this->patient->email]);
 
         $this->withHeaders([
@@ -36,6 +35,18 @@ class PatientSecurityTest extends SecurityTestCase
         ])->getJson(
             "/api/get-last-reservation-by-patient-email/{$this->anotherPatient->email}",
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function testPatientWithValidCanGetHisReservation()
+    {
+        $token = $this->patient->account->user->createToken('app-token', [$this->patient->email]);
+
+        $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token->plainTextToken
+        ])->getJson(
+            "/api/get-last-reservation-by-patient-email/{$this->patient->email}",
+        )->assertStatus(Response::HTTP_OK);
     }
 
     public function testPatientWithInvalidTokenCannotGetReservationOfAnotherPatient()
@@ -73,101 +84,6 @@ class PatientSecurityTest extends SecurityTestCase
             'Accept' => 'application/json'
         ])->getJson(
             "/api/get-last-reservation-by-patient-email/{$this->patient->email}"
-        )->assertStatus(Response::HTTP_UNAUTHORIZED);
-    }
-
-    public function testPatientWithInvalidTokenCannotGetStructuresByRegion()
-    {
-        $this->withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . 'invalid_token'
-        ])->getJson(
-            "/api/get-structures-by-region/Abruzzo"
-        )->assertStatus(Response::HTTP_UNAUTHORIZED);
-    }
-
-    public function testPatientWithoutTokenCannotGetStructuresByRegion()
-    {
-        $this->withHeaders([
-            'Accept' => 'application/json'
-        ])->getJson(
-            "/api/get-structures-by-region/Abruzzo"
-        )->assertStatus(Response::HTTP_UNAUTHORIZED);
-    }
-
-    public function testPatientWithValidTokenCannotCreateReservationForAnotherPatient()
-    {
-        $this->clearTokens($this->patient->account->user);
-        $token = $this->patient->account->user->createToken('app-token', [$this->patient->email]);
-
-        $this->withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token->plainTextToken
-        ])->postJson(
-            "/api/reservation",
-            [
-                'patient_id' => $this->anotherPatient->id,
-                'date' => Carbon::now()->addDays(5)->format('Y-m-d'),
-                'structure_id' => $this->firstStructure->id
-            ]
-        )->assertStatus(Response::HTTP_UNAUTHORIZED);
-    }
-
-    public function testPatientWithInvalidTokenCannotCreateReservationForAnotherPatient()
-    {
-        $this->withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . 'invalid_token'
-        ])->postJson(
-            "/api/reservation",
-            [
-                'patient_id' => $this->anotherPatient->id,
-                'date' => Carbon::now()->addDays(5)->format('Y-m-d'),
-                'structure_id' => $this->firstStructure->id
-            ]
-        )->assertStatus(Response::HTTP_UNAUTHORIZED);
-    }
-
-    public function testPatientWithoutTokenCannotCreateReservationForAnotherPatient()
-    {
-        $this->withHeaders([
-            'Accept' => 'application/json'
-        ])->postJson(
-            "/api/reservation",
-            [
-                'patient_id' => $this->anotherPatient->id,
-                'date' => Carbon::now()->addDays(5)->format('Y-m-d'),
-                'structure_id' => $this->firstStructure->id
-            ]
-        )->assertStatus(Response::HTTP_UNAUTHORIZED);
-    }
-
-    public function testPatientWithInvalidTokenCannotCreateReservation()
-    {
-        $this->withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . 'invalid_token'
-        ])->postJson(
-            "/api/reservation",
-            [
-                'patient_id' => $this->patient->id,
-                'date' => Carbon::now()->addDays(5)->format('Y-m-d'),
-                'structure_id' => $this->firstStructure->id
-            ]
-        )->assertStatus(Response::HTTP_UNAUTHORIZED);
-    }
-
-    public function testPatientWithoutTokenCannotCreateReservation()
-    {
-        $this->withHeaders([
-            'Accept' => 'application/json'
-        ])->postJson(
-            "/api/reservation",
-            [
-                'patient_id' => $this->patient->id,
-                'date' => Carbon::now()->addDays(5)->format('Y-m-d'),
-                'structure_id' => $this->firstStructure->id
-            ]
         )->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 }

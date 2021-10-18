@@ -76,6 +76,9 @@ class User extends Authenticatable
      */
     public function setGoogle2faSecretAttribute($value)
     {
+        if ($value === null) {
+            $this->attributes['google2fa_secret'] = null;
+        }
         $this->attributes['google2fa_secret'] = encrypt($value);
         return $this->attributes['google2fa_secret'];
     }

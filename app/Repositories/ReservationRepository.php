@@ -152,18 +152,20 @@ class ReservationRepository
 
     /**
      * @param  Reservation  $reservation
+     * @param  string  $notes
      * @return Reservation
-     * @throws ValidationException
+     * @throws MaxCapacityExceededException
      * @throws Throwable
+     * @throws ValidationException
      */
-    public function createAndStockDecrement(Reservation $reservation): Reservation
+    public function createAndStockDecrement(Reservation $reservation, string $notes = ''): Reservation
     {
         try {
             DB::beginTransaction();
 
             $this->reservationValidator->canCreate($reservation);
             $reservation->state = Reservation::PENDING_STATE;
-            $reservation->notes = '';
+            $reservation->notes = $notes;
             $newReservation = $this->assignAndSave(
                 Reservation::factory()->make(),
                 $reservation

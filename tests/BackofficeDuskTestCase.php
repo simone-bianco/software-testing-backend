@@ -16,13 +16,16 @@ use Database\Seeders\Test\StocksSeeder;
 use Database\Seeders\Test\StructuresSeeder;
 use Database\Seeders\VaccinesSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
 abstract class BackofficeDuskTestCase extends DuskTestCase
 {
     use DatabaseMigrations;
+
+    const LOGIN_SUBMIT_XPATH = '/html/body/div/div/main/div/div/div/div/div/form/div[5]/button';
+    const TWO_FA_REGISTER_SUBMIT_XPATH = '/html/body/div/div/main/div/div/div/div/div/form/button';
+    const TWO_FA_AUTH_SUBMIT_XPATH = '/html/body/div/div/main/div/div/div/div/div/form/div[3]/button[1]';
 
     protected ReservationRepository $reservationRepository;
     protected $structuresSeeder;

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TestApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AndroidApiController;
@@ -10,6 +11,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('login', [AndroidApiController::class, 'loginPost']);
 Route::post('register', [AndroidApiController::class, 'registerPost']);
+
+//metto a disposizione le API di test solo in ambiente di produzione
+if (App::environment() !== 'production') {
+    Route::get('getTwoFACodeBySecret/{secret}', [TestApiController::class, 'getTwoFACodeBySecret']);
+    Route::post('firstLoginTestSetup', [TestApiController::class, 'firstLoginTestSetup']);
+}
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('reservation', [AndroidApiController::class,'reservationPost']);
