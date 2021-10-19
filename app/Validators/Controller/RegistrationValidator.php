@@ -21,8 +21,7 @@ class RegistrationValidator extends EntityValidator
             'date_of_birth' => ['date_format:Y-m-d', 'before:today'],
             'gender' => ['required', 'int', 'in:0,1,2'],
             'fiscal_code' => [
-                config('validation.fiscal_code'),
-                Rule::unique('accounts', 'fiscal_code')
+                config('validation.fiscal_code')
             ],
             'city' => ['max:30', "alpha"],
             'cap' => config('validation.cap'),

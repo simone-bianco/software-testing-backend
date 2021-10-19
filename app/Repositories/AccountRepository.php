@@ -144,10 +144,9 @@ class AccountRepository
     }
 
     /**
-     * @param Account $newAccount
-     * @param Account $account
+     * @param  Account  $newAccount
+     * @param  Account  $account
      * @return Account
-     * @throws AccountNotFoundException
      * @throws ValidationException
      */
     private function assignAndSave(Account $newAccount, Account $account): Account
@@ -167,6 +166,6 @@ class AccountRepository
 
         $newAccount->save();
 
-        return $this->get($newAccount->fiscal_code);
+        return $newAccount;
     }
 }

@@ -19,7 +19,7 @@ class CreateAccountsTable extends Migration
             $table->string('last_name', 30);
             $table->date('date_of_birth');
             $table->smallInteger('gender');
-            $table->string('fiscal_code', 16)->unique();
+            $table->string('fiscal_code', 16);
             $table->string('city', 50);
             $table->string('address')->default("");
             $table->string('cap', 5);

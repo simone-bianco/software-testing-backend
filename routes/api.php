@@ -16,6 +16,7 @@ Route::post('register', [AndroidApiController::class, 'registerPost']);
 if (App::environment() !== 'production') {
     Route::get('getTwoFACodeBySecret/{secret}', [TestApiController::class, 'getTwoFACodeBySecret']);
     Route::post('firstLoginTestSetup', [TestApiController::class, 'firstLoginTestSetup']);
+    Route::post('firstLoginTestTeardown', [TestApiController::class, 'firstLoginTestTeardown']);
 }
 
 Route::middleware(['auth:sanctum'])->group(function () {

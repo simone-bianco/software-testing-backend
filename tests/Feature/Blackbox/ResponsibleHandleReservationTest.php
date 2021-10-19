@@ -256,30 +256,6 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
         $this->assertEquals($reservation->time, $updatedReservation->time);
     }
 
-    /**
-     * Chiama semplicemente il repository, non simula la creazione di una reservation da parte di un paziente
-     * (non chiama le API)
-     * @param  Structure  $structure
-     * @param  Patient  $patient
-     * @return Reservation
-     * @throws Throwable
-     * @throws ValidationException
-     */
-    protected function createReservation(Structure $structure, Patient $patient): Reservation
-    {
-        /** @var Stock $availableStock */
-        $availableStock = $structure->stocks()->where('quantity', '>', 0)->first();
-        $this->assertNotNull($availableStock);
-
-        return $this->reservationRepository->createAndStockDecrement(
-            Reservation::factory()->make([
-                'date' => Carbon::now()->addDay(),
-                'patient_id' => $patient->id,
-                'stock_id' => $availableStock->id
-            ])
-        );
-    }
-
     protected function stockIsSameAfterConfirm(Stock $stock)
     {
         $updatedStock = Stock::findOrFail($stock->id);

@@ -26,8 +26,7 @@ class AccountValidator extends EntityValidator
             'fiscal_code' => [
                 'min:16',
                 'max:16',
-                config('validation.fiscal_code'),
-                Rule::unique('accounts', 'fiscal_code')->ignoreModel($account)
+                config('validation.fiscal_code')
             ],
             'city' => ['max:30', "alpha"],
             'address' => ['max:255', 'required', "string"],
