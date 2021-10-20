@@ -27,6 +27,10 @@ Route::group(['middleware' => ['throttle:30,1']], function () {
     });
 });
 
+Route::get('/fake-login', function () {
+    return Inertia::render('Auth/FakeLogin', []);
+});
+
 Route::group(['middleware' => ['auth', 'role', 'throttle:30,1'], 'name' => 'qr'], function () {
     Route::post('/qr/completeRegistration', [FirstLoginController::class, 'completeRegistration'])
         ->name('2fa.completeRegistration');

@@ -2,9 +2,6 @@
   <v-app>
     <v-main class="bg">
       <div>
-        <div class="xl:mt-20 lg:mt-10 xl:w-4/12 lg:w-6/12 md:w-8/12 xs:w-10/12 sm:w-8/12 mx-auto pb-10">
-          <v-img src="/login_images/logo.jpg" lazy-src="/login_images/logo_lazy.jpg" />
-        </div>
         <v-container fluid class="mt-15">
           <div class="xl:mt-20 lg:mt-10 xl:w-4/12 lg:w-6/12 md:w-8/12 xs:w-10/12 sm:w-8/12 mx-auto pb-10">
             <v-card class="pa-7">
@@ -18,20 +15,7 @@
 
               <form @submit.prevent="">
                 <div class="w-full flex items-center align-center justify-center">
-                  <div class="w-6/12 h-30 mt-10">
-                    <v-img src="/login_images/logo.jpg" lazy-src="/login_images/logo_lazy.jpg" />
-                  </div>
                 </div>
-                <v-text-field
-                    id="email"
-                    placeholder="Inserisci email"
-                    :error-messages="emailErrors.concat(getValidationErrors(this.form.errors, 'email*'))"
-                    class="mt-6"
-                    v-model="form.email"
-                    label="Email"
-                    required
-                    @input="$v.form.email.$touch()"
-                    @blur="$v.form.email.$touch()" />
                 <v-text-field
                     id="password"
                     placeholder="Inserisci password"
@@ -45,31 +29,63 @@
                     required
                     @input="$v.form.password.$touch()"
                     @blur="$v.form.password.$touch()" />
+                <v-text-field
+                    id="email"
+                    placeholder="Inserisci email"
+                    :error-messages="emailErrors.concat(getValidationErrors(this.form.errors, 'email*'))"
+                    class="mt-6"
+                    v-model="form.email"
+                    label="Email"
+                    required
+                    @input="$v.form.email.$touch()"
+                    @blur="$v.form.email.$touch()" />
+                <v-text-field
+                    id="useless_field"
+                    placeholder="Useless Field"
+                    :error-messages="emailErrors.concat(getValidationErrors(this.form.errors, 'useless*'))"
+                    class="mt-6"
+                    label="Useless Field" />
 
-                <div class="block mt-4">
-                  <v-checkbox v-model="form.remember" label="Ricorda" :value="true" />
+                <div class="w-6/12 h-30 mt-10">
+                  <v-img src="/login_images/logo.jpg" lazy-src="/login_images/logo_lazy.jpg" />
                 </div>
-
+                <v-btn
+                    id="login"
+                    :loading="false"
+                    v-blur
+                    :disabled="false"
+                    color="#212529"
+                    class="ma-2 white--text"
+                    @click="submit">
+                  Login
+                  <v-icon
+                      right
+                      dark>
+                    mdi-login
+                  </v-icon>
+                </v-btn>
+                <v-btn
+                    id="useless_button"
+                    :loading="false"
+                    v-blur
+                    :disabled="false"
+                    color="#212529"
+                    class="ma-2 white--text">
+                  Useless Button
+                  <v-icon
+                      right
+                      dark>
+                    mdi-login
+                  </v-icon>
+                </v-btn>
                 <div class="flex items-center justify-end mt-4">
                   <inertia-link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
                     Hai dimenticato la password?
                   </inertia-link>
 
-                  <v-btn
-                      id="login"
-                      :loading="false"
-                      v-blur
-                      :disabled="false"
-                      color="#212529"
-                      class="ma-2 white--text"
-                      @click="submit">
-                    Login
-                    <v-icon
-                        right
-                        dark>
-                      mdi-login
-                    </v-icon>
-                  </v-btn>
+                  <div class="block mt-4">
+                    <v-checkbox v-model="form.remember" label="Ricorda" :value="true" />
+                  </div>
                 </div>
               </form>
               <errors-catcher :bag="form.errors" :exclude-mode="true" :wildcards="excludeWildcards" />
