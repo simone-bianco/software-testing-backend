@@ -13,8 +13,30 @@
     </testsuites>
     <coverage processUncoveredFiles="true" pathCoverage="true">
         <include>
-            <directory suffix=".php">./app</directory>
+            <directory suffix=".php">./app/Models</directory>
+            <directory suffix=".php">./app/Repositories</directory>
+            <directory suffix=".php">./app/Validators</directory>
+            <directory suffix=".php">./app/Policies</directory>
+            <directory suffix=".php">./app/Http/Controllers</directory>
+            <directory suffix=".php">./app/Http/Observers</directory>
+            <directory suffix=".php">./app/Http/Middleware</directory>
+            <file>./app/routes/web.php</file>
+            <directory suffix=".php">./database/migrations</directory>
         </include>
+        <exclude>
+            <file>./app/Http/Controllers/Controller.php</file>
+            <file>./app/Http/Controllers/ResponsibleController.php</file>
+            <file>./app/Http/Controllers/TestApiController.php</file>
+            <file>./app/Http/Middleware/HandleInertiaRequests.php</file>
+            <file>./app/Http/Middleware/Authenticate.php</file>
+            <file>./app/Http/Middleware/EncryptCookies.php</file>
+            <file>./app/Http/Middleware/PreventRequestsDuringMaintenance.php</file>
+            <file>./app/Http/Middleware/TrustHosts.php</file>
+            <file>./app/Http/Middleware/TrimStrings.php</file>
+            <file>./app/Http/Middleware/TrustProxies.php</file>
+            <file>./app/Http/Middleware/VerifyCsrfToken.php</file>
+            <file>./app/Http/Models/Director.php</file>
+        </exclude>
         <report>
             <html outputDirectory="tests/reports/coverage"/>
         </report>

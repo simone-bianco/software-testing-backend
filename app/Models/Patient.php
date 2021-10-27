@@ -57,20 +57,8 @@ class Patient extends Model
     /**
      * @return Vaccine[]
      */
-
     public function getAllowedVaccines(): array
     {
-        $age=Carbon::parse($this->account->date_of_birth)->diff(Carbon::now())->y;
-
-        if( $age >= 90)
-            return Vaccine::where("name","=","Pfizer")->get()->all();
-        elseif ($this->heart_disease || $this->immunosuppression || $this->anticoagulants || $this->allergy)
-            return Vaccine::where("name","=","Pfizer")->get()->all();
-        elseif ($age >= 60 && $age < 70 && $this->account->gender != Account::GENDER_FEMALE)
-            return Vaccine::where("name","=","AstraZeneca")->get()->all();
-        elseif ($age >=20 && $age <60)
-            return Vaccine::where("name","!=","AstraZeneca")->get()->all();
-
         return Vaccine::all()->toArray();
     }
 

@@ -68,18 +68,15 @@ class StockRepository
         }
     }
 
-    /**
-     * @param  Stock  $stock
-     * @param  int  $qty
-     * @return Stock
-     * @throws ValidationException
-     */
+//    public function decrementAndSave($stock, int $qty = 1): Stock
     public function decrementAndSave(Stock $stock, int $qty = 1): Stock
     {
         try {
+//            $stockAttributes = $stock->toArray();
             $stock->quantity -= $qty;
 
             return $this->assignAndSave(
+//                Stock::whereId($stock->id)->first(),
                 Stock::whereId($stock->id)->firstOrFail(),
                 $stock
             );

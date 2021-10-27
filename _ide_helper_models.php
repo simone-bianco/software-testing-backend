@@ -154,7 +154,6 @@ namespace App\Models{
  * @property int $stock_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \datetime|null $updated_at
- * @property-read bool $has_recall
  * @property-read \App\Models\Patient $patient
  * @property-read \App\Models\Stock $stock
  * @method static \Database\Factories\ReservationFactory factory(...$parameters)

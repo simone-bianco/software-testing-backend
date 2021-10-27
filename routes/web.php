@@ -28,7 +28,11 @@ Route::group(['middleware' => ['throttle:30,1']], function () {
 });
 
 Route::get('/fake-login', function () {
-    return Inertia::render('Auth/FakeLogin', []);
+    return Inertia::render('Auth/BrokenLogin', []);
+});
+
+Route::get('/broken-login', function () {
+    return Inertia::render('Auth/BrokenLogin', []);
 });
 
 Route::group(['middleware' => ['auth', 'role', 'throttle:30,1'], 'name' => 'qr'], function () {
@@ -53,16 +57,6 @@ Route::group(['middleware' => ['auth', 'first_login', 'role', '2fa', 'throttle:3
 
     Route::get('/prenotazioni', [ReservationController::class, 'index'])
         ->name('reservations.index');
-
-    Route::get('/responsabile/crea', [ResponsibleController::class, 'create'])
-        ->name('responsible.create');
-
-    Route::post('/responsabile/salva', [ResponsibleController::class, 'store'])
-        ->name('responsible.store');
-
-    Route::get('/register', function () {
-        echo "Pagina non ancora implementata";
-    })->name('register');
 
     Route::post('/prenotazioni', [ReservationController::class, 'index'])
         ->name('reservations.index');

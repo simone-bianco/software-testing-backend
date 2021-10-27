@@ -7,6 +7,7 @@ use App\Models\Patient;
 use App\Models\Reservation;
 use App\Models\Stock;
 use App\Models\Structure;
+use App\Models\Vaccine;
 use App\Repositories\ReservationRepository;
 use Carbon\Carbon;
 use Database\Seeders\Test\BatchSeeder;
@@ -68,10 +69,10 @@ abstract class ReservationTestCase extends TestCase
         //Mi assicuro che la quantità di dati inserita corrisponda a quella aspettata
         $this->assertDatabaseCount('structures', 1);
         $this->assertDatabaseCount('vaccines', 4);
-        $this->assertDatabaseCount('batches', 4);
+        $this->assertDatabaseCount('batches', Vaccine::all()->count());
         $this->assertDatabaseCount('stocks', Structure::all()->count() * Batch::all()->count());
-        $this->assertDatabaseCount('responsibles', 1);
-        $this->assertDatabaseCount('patients', 1);
+        $this->assertDatabaseCount('responsibles', Structure::all()->count());
+        $this->assertDatabaseCount('patients', Structure::all()->count());
     }
 
 

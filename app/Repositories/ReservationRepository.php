@@ -123,7 +123,6 @@ class ReservationRepository
     public function cancelAndStockIncrement(Reservation $reservation, string $notes = ''): Reservation
     {
         try {
-            $reservation->notes = $notes;
             $this->reservationValidator->canCancel($reservation);
 
             DB::beginTransaction();
@@ -131,6 +130,7 @@ class ReservationRepository
             $oldReservation = Reservation::whereId($reservation->id)->firstOrFail();
 
             $oldReservation->state = Reservation::CANCELED_STATE;
+            $oldReservation->notes = $notes;
             $cancelledReservation = $this->save($oldReservation);
 
             $this->stockRepository->incrementAndSave($oldReservation->stock);
@@ -320,6 +320,6 @@ class ReservationRepository
         $this->reservationValidator->validateData($newReservation->toArray(), ['reservation' => $newReservation]);
         $newReservation->save();
 
-        return $this->get($newReservation->code);
+        return $newReservation;
     }
 }

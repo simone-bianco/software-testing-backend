@@ -109,9 +109,9 @@ class ReservationController extends Controller
 
         $this->authorize('poll', [Reservation::class, $structure]);
 
-        if (!$structure) {
-            return 0;
-        }
+//        if (!$structure) {
+//            return 0;
+//        }
 
         $lastUpdate = $request->get('last_update');
 

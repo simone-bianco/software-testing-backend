@@ -92,15 +92,6 @@ class Reservation extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function getHasRecallAttribute(): bool
-    {
-        return Reservation::wherePatientId($this->patient_id)
-                ->where('state', '!=', self::CANCELED_STATE)
-                ->where('date', '>', $this->date)
-                ->get()
-                ->count() >= 1;
-    }
-
     /**
      * @return string[]
      */

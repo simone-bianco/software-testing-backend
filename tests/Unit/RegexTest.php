@@ -34,7 +34,7 @@ class RegexTest extends TestCase
                 )->validate();
                 $this->assertNotNull($validatedData);
             } catch (ValidationException $validationException) {
-                $this->assertFalse(true, "$expression -> $validValue risulta non valida!\n");
+                $this->fail("$expression -> $validValue risulta non valida!\n");
             }
         }
         foreach ($invalidValues as $invalidValue) {
@@ -44,14 +44,14 @@ class RegexTest extends TestCase
                     ['regex' => $expression],
                     ['regex.*' => 'Regex non valida!']
                 )->validate();
-                $this->assertFalse(true, "$expression -> $invalidValue passa!");
+                $this->fail("$expression -> $invalidValue passa!");
             } catch (ValidationException $exception) {
                 $this->assertNotNull($exception);
             }
         }
     }
 
-    public function regexProvider()
+    public function regexProvider(): array
     {
         return [
             ['fiscal_code.json'],
