@@ -234,9 +234,9 @@ class ReservationRepositoryCoverageTest extends ReservationTestCase
             $this->reservationRepository->confirmAndSave($reservation, Str::random(100));
             $this->fail('Eccezione di validazione non lanciata');
         } catch (ValidationException $validationException) {
-            $this->fail('Lanciata eccezione errata');
+            $this->assertNotNull($validationException);
         } catch (Exception $exception) {
-            $this->assertNotNull($exception);
+            $this->fail('Lanciata eccezione errata');
         }
     }
 }

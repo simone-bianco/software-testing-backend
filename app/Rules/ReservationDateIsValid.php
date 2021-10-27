@@ -26,6 +26,10 @@ class ReservationDateIsValid implements Rule
     {
         $date = Carbon::make($value);
 
+        if (!$this->reservation->stock) {
+            return false;
+        }
+
         $structure = $this->reservation->stock->structure;
         $busyDates = $structure->getBusyDates();
 

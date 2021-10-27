@@ -127,6 +127,6 @@ class StockRepository
         $this->stockValidator->validateData($newStock->toArray(), ['stock' => $newStock]);
         $newStock->save();
 
-        return $this->get($newStock->code);
+        return $newStock;
     }
 }

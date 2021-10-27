@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use App\Models\Structure;
 use App\Rules\ReservationDateIsValid;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -19,7 +20,7 @@ class ReservationValidator extends EntityValidator
     protected function getRules($extendParameters): array
     {
         /** @var Reservation $reservation */
-        $reservation = \Arr::get($extendParameters, 'reservation') ?? Reservation::factory()->newModel();
+        $reservation = Arr::get($extendParameters, 'reservation') ?? Reservation::factory()->newModel();
 
         return [
             'date' => ['required', 'date_format:Y-m-d', new ReservationDateIsValid($reservation)],
@@ -31,7 +32,8 @@ class ReservationValidator extends EntityValidator
                 config('validation.reservation_code'),
                 Rule::unique('reservations', 'code')->ignoreModel($reservation)
             ],
-            'patient_id' => ['required', Rule::exists('patients', 'id')]
+            'patient_id' => ['required', Rule::exists('patients', 'id')],
+            'stock_id' => ['required', Rule::exists('stocks', 'id')],
         ];
     }
 
