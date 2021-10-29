@@ -87,7 +87,11 @@ class ReservationRepositoryTest extends BaseTestCase
             Mockery::mock(StockRepository::class, function (Mockery\MockInterface $mock) {
                 $mock->shouldReceive('incrementAndSave')
                     ->once()
-                    ->withArgs(fn($stock) => true);
+                    ->withArgs(function ($stock) {
+                        $stock->quantity++;
+                        $stock->save();
+                        return true;
+                    });
             })
         );
         $this->instance(
@@ -107,14 +111,17 @@ class ReservationRepositoryTest extends BaseTestCase
             'state' => Reservation::CONFIRMED_STATE,
             'code' => Str::random(32)
         ]);
+        $qty = $reservation->stock->quantity;
 
         $reservationRepository = app(ReservationRepository::class);
 
         $cancelledReservation = $reservationRepository->cancelAndStockIncrement($reservation, 'test notes 3');
+
         $this->assertInstanceOf(Reservation::class, $cancelledReservation);
         $this->assertNotNull($cancelledReservation->id);
         $this->assertEquals(Reservation::CANCELED_STATE, $cancelledReservation->state);
         $this->assertEquals('test notes 3', $cancelledReservation->notes);
+        $this->assertEquals($qty + 1, $cancelledReservation->stock->quantity);
     }
 
     protected function getTestReservation(): Reservation
