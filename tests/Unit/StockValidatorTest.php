@@ -11,6 +11,9 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Tests\BaseTestCase;
 
+/**
+ * @group reservationIntegration
+ */
 class StockValidatorTest extends BaseTestCase
 {
     protected ?StockValidator $stockValidator;
@@ -24,7 +27,7 @@ class StockValidatorTest extends BaseTestCase
     /**
      * @dataProvider stockProvider
      */
-    public function testStockValidatorTest(
+    public function testStockValidator(
         $expectedResult,
         $quantity,
         $code,
@@ -80,11 +83,18 @@ class StockValidatorTest extends BaseTestCase
     {
         $str = Str::random(32);
         return [
+            //[Esito validation, codice, id struttura, id lotto, attributi non validi]
+            #step 1
             [true, 5, $str, 'first', 'first', []],
+            #step 2
             [false, null, null, null, null, ['quantity', 'code', 'structure_id', 'batch_id']],
+            #step 3
             [false, -1, Str::random(500), -1, -1, ['quantity', 'code', 'structure_id', 'batch_id']],
+            #step 4
             [false, PHP_INT_MAX + 1, '', 100, 100, ['quantity', 'code', 'structure_id', 'batch_id']],
+            #step 5
             [false, '', -1, '', '', ['quantity', 'code', 'structure_id', 'batch_id']],
+            #step 6
             [false, 5, Str::random(3), 'first', 'first', ['code']],
         ];
     }

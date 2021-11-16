@@ -11,6 +11,9 @@ use Illuminate\Support\Str;
 use Mockery;
 use Tests\BaseTestCase;
 
+/**
+ * @group reservationIntegration
+ */
 class StockRepositoryTest extends BaseTestCase
 {
     public function testUnitCreateStock()

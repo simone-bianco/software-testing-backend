@@ -13,6 +13,9 @@ use Illuminate\Support\Str;
 use Mockery;
 use Tests\BaseTestCase;
 
+/**
+ * @group reservationIntegration
+ */
 class ReservationRepositoryTest extends BaseTestCase
 {
     public function testUnitCreateReservation()

@@ -10,6 +10,9 @@ use Database\Factories\StockFactory;
 use Illuminate\Support\Str;
 use Tests\BaseTestCase;
 
+/**
+ * @group reservationIntegration
+ */
 class StockRepositoryValidatorIntegrationTest extends BaseTestCase
 {
     public function testIntegrationValidatorCreateStock()

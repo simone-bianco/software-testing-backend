@@ -6,6 +6,7 @@ use App\Models\Patient;
 use App\Models\Responsible;
 use App\Models\Structure;
 use App\Repositories\PatientRepository;
+use Arr;
 use Carbon\Carbon;
 use Laravel\Sanctum\NewAccessToken;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,6 +76,16 @@ class RobustnessCreateReservationTest extends ReservationTestCase
             ]
         );
         $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
+        $payload = $response->json();
+        $errors = Arr::get($payload, 'errors');
+        if (!$errors) {
+            $this->fail("Non ci sono errori nel payload");
+        }
+        $errorFields = array_keys($errors);
+        $this->assertCount(3, $errorFields);
+        $this->assertContains('patient_id', $errorFields);
+        $this->assertContains('structure_id', $errorFields);
+        $this->assertContains('date', $errorFields);
 
         /** Post Condizioni */
         $this->assertDatabaseCount('reservations', 0);
@@ -83,38 +94,12 @@ class RobustnessCreateReservationTest extends ReservationTestCase
     public function reservationProvider(): array
     {
         return [
-            //ID paziente non valido (nullo) #0
-            [null, Carbon::now()->addDays(5), 1],
-            //ID paziente non valido (stringa) #1
-            ["wrong ID", Carbon::now()->addDays(5), 1],
-            //ID paziente non valido (zero) #2
-            [0, Carbon::now()->addDays(5), 1],
-            //ID di un paziente non esistente #3
-            [100, Carbon::now()->addDays(5), 1],
-            //data non valida #4
-            [1, "wrong date", 1],
-            //mese non valido #5
-            [1, "2021-22-01", 1],
-            //giorno non valido #6
-            [1, "2021-11-32", 1],
-            //anno non valido #7
-            [1, "XXXX-11-32", 1],
-            //Data precedente a quella corrente #8
-            [1, Carbon::now()->subDays(5), 1],
-            //Data coincidente con quella attuale #9
-            [1, Carbon::now()->startOfDay(), 1],
-            //Data nulla #10
-            [1, null, 1],
-            //ID struttura non valido (nullo) #11
-            [1, Carbon::now()->addDays(5), null],
-            //ID struttura non valido (stringa) #12
-            [1, Carbon::now()->addDays(5), "wrong ID"],
-            //ID struttura non valido (zero) #13
-            [1, Carbon::now()->addDays(5), 0],
-            //ID di una struttura non esistente #14
-            [1, Carbon::now()->addDays(5), 100],
-            //ID struttura non valido (nullo) #15
-            [1, Carbon::now()->addDays(5)->format('d/m/Y'), null],
+            //ID paziente non valido (nullo), data in formato non valido, ID struttura non valido (nullo) #0
+            [null, Carbon::now()->addDays(5)->format('d-m-Y'), null],
+            //ID paziente non valido (stringa), data nulla, ID struttura non valido #1
+            ["wrong ID", null, "wrong ID"],
+            //ID di un paziente non esistente, data antecedente a quella attuale, ID struttura non valido #2
+            [100, Carbon::now()->subDays(5)->format('Y-m-d'), 100],
         ];
     }
 }

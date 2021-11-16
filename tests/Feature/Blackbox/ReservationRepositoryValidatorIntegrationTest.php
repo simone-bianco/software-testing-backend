@@ -12,6 +12,9 @@ use Illuminate\Support\Str;
 use Mockery;
 use Tests\BaseTestCase;
 
+/**
+ * @group reservationIntegration
+ */
 class ReservationRepositoryValidatorIntegrationTest extends BaseTestCase
 {
     public function testValidatorIntegrationCreateReservation()

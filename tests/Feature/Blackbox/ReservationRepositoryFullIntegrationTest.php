@@ -10,6 +10,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Tests\BaseTestCase;
 
+/**
+ * @group reservationIntegration
+ */
 class ReservationRepositoryFullIntegrationTest extends BaseTestCase
 {
     public function testValidatorStockRepositoryIntegrationCreateReservation()

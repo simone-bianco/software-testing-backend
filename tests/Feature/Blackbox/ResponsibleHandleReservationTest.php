@@ -18,6 +18,7 @@ use Throwable;
 /**
  * Test per verificare il funzionamento di ciascuna operazione che l'operatore sanitario può effettuare sulla
  * prenotazione
+ * @group reservationIntegration
  */
 final class ResponsibleHandleReservationTest extends ReservationTestCase
 {
@@ -271,6 +272,12 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
     protected function stockIsUpdatedAfterCancel(Stock $stock)
     {
         $updatedStock = Stock::findOrFail($stock->id);
-        $this->assertEquals($stock->quantity + 1, $updatedStock->quantity);
+        $expectedQty = $stock->quantity + 1;
+        $this->assertEquals(
+            $expectedQty,
+            $updatedStock->quantity,
+            "Lo stock dopo la cancellazione della prenotazione dovrebbe avere quantita' "
+            . "'$expectedQty', invece e' '{$updatedStock->quantity}'"
+        );
     }
 }
