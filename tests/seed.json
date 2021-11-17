@@ -1,6 +1,7 @@
 {
   "structures": [
     {
+      "id": 1,
       "name": "Struttura Test 1",
       "region": "campania",
       "capacity": 24
@@ -8,6 +9,7 @@
   ],
   "responsibles": [
     {
+      "id": 1,
       "first_name": "responsabile",
       "last_name": "test",
       "date_of_birth": "data attuale - 20 anni - 1 giorno",
@@ -18,11 +20,13 @@
       "cap": "80137",
       "mobile_phone": "333666910",
       "password": "test",
-      "email": "responsabile_test_i@email.it"
+      "email": "responsabile_test_i@email.it",
+      "structure_id": 1
     }
   ],
   "patients": [
     {
+      "id": 1,
       "first_name": "paziente",
       "last_name": "test",
       "date_of_birth": "data attuale - 20 anni - 1 giorno",
@@ -44,6 +48,7 @@
   ],
   "vaccines": [
     {
+      "id": 1,
       "name": "Pfizer",
       "vaccine_doses": 2,
       "src": "vaccine_images/pfizer.jpg",
@@ -51,6 +56,7 @@
       "url": "https://www.pfizer.com/"
     },
     {
+      "id": 2,
       "name": "Moderna",
       "vaccine_doses": 2,
       "src": "vaccine_images/moderna.jpg",
@@ -58,6 +64,7 @@
       "url": "https://www.modernatx.com/"
     },
     {
+      "id": 3,
       "name": "Johnson&Johnson" ,
       "vaccine_doses": 1,
       "src": "vaccine_images/johnson.jpg",
@@ -65,6 +72,7 @@
       "url": "https://www.jnj.com/"
     },
     {
+      "id": 4,
       "name": "AstraZeneca",
       "vaccine_doses": 2,
       "src": "vaccine_images/astrazeneca.jpg",
@@ -74,30 +82,50 @@
   ],
   "batches": [
     {
-      "code": "Pfizer_batch_1"
+      "id": 1,
+      "code": "Pfizer_batch_1",
+      "vaccine_id": 1
     },
     {
-      "code": "Moderna_batch_2"
+      "id": 2,
+      "code": "Moderna_batch_2",
+      "vaccine_id": 2
     },
     {
-      "code": "Johnson&Johnson_batch_3"
+      "id": 3,
+      "code": "Johnson&Johnson_batch_3",
+      "vaccine_id": 2
     },
     {
-      "code": "AstraZeneca_batch_4"
+      "id": 4,
+      "code": "AstraZeneca_batch_4",
+      "vaccine_id": 2
     }
   ],
   "stocks": [
     {
-      "quantity": 1
+      "id": 1,
+      "quantity": 1,
+      "structure_id": 1,
+      "batch_id": 1
     },
     {
-      "quantity": 1
+      "id": 2,
+      "quantity": 1,
+      "structure_id": 1,
+      "batch_id": 2
     },
     {
-      "quantity": 1
+      "id": 3,
+      "quantity": 1,
+      "structure_id": 1,
+      "batch_id": 3
     },
     {
-      "quantity": 1
+      "id": 4,
+      "quantity": 1,
+      "structure_id": 1,
+      "batch_id": 4
     }
   ]
 }
