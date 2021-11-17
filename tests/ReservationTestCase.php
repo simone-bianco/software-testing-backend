@@ -99,4 +99,132 @@ abstract class ReservationTestCase extends TestCase
             ])
         );
     }
+
+
+    private function sortByLength(array &$array)
+    {
+        array_multisort(array_map('count', $array), SORT_DESC, $array);
+    }
+
+    private function uniqueCombination($values, $minLength = 1, $maxLength = 2000): array
+    {
+        $count = count($values);
+        $size = pow(2, $count);
+        $keys = array_keys($values);
+        $return = [];
+
+        for($i = 0; $i < $size; $i ++) {
+            $b = sprintf("%0" . $count . "b", $i);
+            $out = [];
+
+            for($j = 0; $j < $count; $j ++) {
+                if ($b[$j] == '1') {
+                    $out[$keys[$j]] = $values[$keys[$j]];
+                }
+            }
+
+            if (count($out) >= $minLength && count($out) <= $maxLength) {
+                $return[] = $out;
+            }
+        }
+
+        return $return;
+    }
+
+    function getArrayCombinations($arrays, bool $uniqueKeys = false): array
+    {
+        $result = array(array());
+        foreach ($arrays as $property => $property_values) {
+            $tmp = array();
+            foreach ($result as $result_item) {
+                foreach ($property_values as $property_key => $property_value) {
+                    $tmp[] = $result_item + array("$property.$property_key" => $property_value);
+                }
+            }
+            if (!$uniqueKeys) {
+                $result = array_values($tmp);
+            }
+        }
+        return $result;
+    }
+
+    protected function generateKCombinations($values, $k): array
+    {
+        # per prima cosa ordino l'array in base al numero degli input
+        $this->sortByLength($values);
+        /*
+        * parto dall'array contenente il dati da provare, es:
+        *   $indexesByKeys = [
+        *    'code' => [
+        *       0 => 0, # sono gli indici del dizionario -> $dictionary['code'][0] = primo valore da provare di code
+        *       1 => 1,
+        *       etc...
+        *     ]
+        *   etc...
+        *   ]
+        */
+        # Formo le k-uple, prendendo k campi alla volta
+        $fieldCombinations = [];
+        $fieldKeys = array_keys($values);
+        $i = 0;
+        $valuesLength = sizeof($values);
+        while ($i < $valuesLength) {
+            # prendo k campi, es. per k=2 $kFields = ['date', 'code']
+            $kFields = array_slice($fieldKeys, $i, min($k, $valuesLength - $i));
+            # genero chiave unique per la k-pla es. $key = 'date.code'
+            $key = implode('.', $kFields);
+
+            $inputCombinations = [];
+            foreach ($kFields as $field) {
+                $inputCombinations[$field] = array_keys($values[$field]);
+            }
+            $fieldCombinations[$key] = $inputCombinations;
+
+            $fieldCombinations[$key] = $this->getArrayCombinations($fieldCombinations[$key]);
+
+            $i += $k;
+        }
+        /*
+         * Il risultato è un array contenente le coppie con la lista di valori da provare, in questo formato
+         * $fieldCombinations = [
+         *    "state.patient" => [
+         *        0 => [
+         *          "state.0" => 0
+         *          "patient.0" => 0
+         *        ]
+         *        1 => [
+         *          "state.0" => 0
+         *          "patient.1" => 1
+         *        ]
+         *    etc..
+         *    ],
+         *    "code.time" => [...]
+         *    etc...
+         * ]
+         */
+        foreach ($fieldCombinations as $keyCombo => $values) {
+            foreach ($values as $index => $value) {
+                $fieldCombinations[$keyCombo][$index] = array_values($value);
+            }
+        }
+        /*
+         * Il risultato è un array contenente le coppie con la lista di valori da provare, in questo formato
+         * $fieldCombinations = [
+         *    "state.patient" => [
+         *        0 => [
+         *          0 => 0
+         *          1 => 0
+         *        ]
+         *        1 => [
+         *          0 => 0
+         *          1 => 1
+         *        ]
+         *    etc..
+         *    ],
+         *    "code.time" => [...]
+         *    etc...
+         * ]
+         */
+        return $fieldCombinations;
+    }
 }

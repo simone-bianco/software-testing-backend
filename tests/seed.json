@@ -1,0 +1,103 @@
+{
+  "structures": [
+    {
+      "name": "Struttura Test i",
+      "region": "campania",
+      "capacity": 24
+    }
+  ],
+  "responsibles": [
+    {
+      "first_name": "responsabile",
+      "last_name": "test",
+      "date_of_birth": "data attuale - 20 anni - i giorni",
+      "address": "fake address i",
+      "gender": "M",
+      "fiscal_code": "codice fiscale generato con libreria laravel-codicefiscale in base agli altri parametri",
+      "city": "Napoli",
+      "cap": "80137",
+      "mobile_phone": "333666999 + i",
+      "password": "test",
+      "email": "responsabile_test_i@email.it"
+    }
+  ],
+  "patients": [
+    {
+      "first_name": "paziente",
+      "last_name": "test",
+      "date_of_birth": "data attuale - 20 anni - i giorni",
+      "address": "via di test i",
+      "gender": "M",
+      "fiscal_code": "codice fiscale generato con libreria laravel-codicefiscale in base agli altri parametri",
+      "city": "Napoli",
+      "cap": "55666",
+      "mobile_phone": "3339996 + i",
+      "email": "paziente_test_i@email.it",
+      "password": "test",
+      "heart_disease": false,
+      "allergy": false,
+      "immunosuppression": false,
+      "anticoagulants": false,
+      "covid": false,
+      "account_id": false
+    }
+  ],
+  "vaccines": [
+    {
+      "name": "Pfizer",
+      "vaccine_doses": 2,
+      "src": "vaccine_images/pfizer.jpg",
+      "lazy_src": "vaccine_images/pfizer_lazy.jpg",
+      "url": "https://www.pfizer.com/"
+    },
+    {
+      "name": "Moderna",
+      "vaccine_doses": 2,
+      "src": "vaccine_images/moderna.jpg",
+      "lazy_src": "vaccine_images/moderna_lazy.jpg",
+      "url": "https://www.modernatx.com/"
+    },
+    {
+      "name": "Johnson&Johnson" ,
+      "vaccine_doses": 1,
+      "src": "vaccine_images/johnson.jpg",
+      "lazy_src": "vaccine_images/johnson_lazy.jpg",
+      "url": "https://www.jnj.com/"
+    },
+    {
+      "name": "AstraZeneca",
+      "vaccine_doses": 2,
+      "src": "vaccine_images/astrazeneca.jpg",
+      "lazy_src": "vaccine_images/astrazeneca_lazy.jpg",
+      "url": "https://www.astrazeneca.it/"
+    }
+  ],
+  "batches": [
+    {
+      "code": "Pfizer_batch_1"
+    },
+    {
+      "code": "Moderna_batch_2"
+    },
+    {
+      "code": "Johnson&Johnson_batch_3"
+    },
+    {
+      "code": "AstraZeneca_batch_4"
+    }
+  ],
+  "stocks": [
+    {
+      "quantity": 1
+    },
+    {
+      "quantity": 1
+    },
+    {
+      "quantity": 1
+    },
+    {
+      "quantity": 1
+    }
+  ]
+}

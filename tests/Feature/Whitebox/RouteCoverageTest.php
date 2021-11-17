@@ -12,9 +12,10 @@ use Illuminate\Support\Str;
 use Session;
 use Tests\ReservationTestCase;
 
+
 class RouteCoverageTest extends ReservationTestCase
 {
-    const K = 3;
+    const K = 2;
 
     public function setUp(): void
     {
@@ -31,6 +32,7 @@ class RouteCoverageTest extends ReservationTestCase
      */
     public function testRouteCoverageKWay($url, $method, $fields, $iterations)
     {
+        # faccio chiamata senza autenticazione
         $requestBody = [];
         $structure = Structure::firstOrFail();
         $responsible = $structure->responsibles()->firstOrFail();
@@ -40,6 +42,7 @@ class RouteCoverageTest extends ReservationTestCase
             $requestBody
         );
         $this->assertNotEquals(500, $response->status());
+        # faccio chiamata con autenticazione ma senza 2fa
         $this->be($responsible->account->user);
         $response = $this->call(
             $method,
@@ -55,32 +58,31 @@ class RouteCoverageTest extends ReservationTestCase
             $dictionaries[$field] = $this->getDictionary($field);
         }
 
-        foreach ($dictionaries as $field => $dictionary) {
-            if (sizeof($dictionary) < 1) {
-                unset($dictionaries[$field]);
-                continue;
-            }
-            $requestBody[$field] = Arr::first($dictionary);
-            unset($dictionaries[$field][0]);
+//        $combinations = $this->uniqueCombination($dictionaries, 1, 5);
+//        var_dump(print_r($combinations, true));
+
+        $fieldsCombinations = $this->generateKCombinations($dictionaries, 3);
+
+        $keysByCombination = [];
+        $lengthsByKeyCombinations = [];
+        foreach ($fieldsCombinations as $keysCombination => $fieldsCombination) {
+            $keysByCombination[$keysCombination] = explode('.', $keysCombination);
+            $lengthsByKeyCombinations[$keysCombination] = sizeof($fieldsCombination);
         }
-        while (sizeof($dictionaries) > 0) {
+
+        $iterations = sizeof(Arr::first($fieldsCombinations));
+        for ($i = 0; $i < $iterations; $i++) {
+            $payload = [];
+            foreach ($keysByCombination as $keyCombination => $keys) {
+                foreach ($keys as $index => $key) {
+                    $payload[$key] = $dictionaries[$key][$fieldsCombinations[$keyCombination][$i % $lengthsByKeyCombinations[$keyCombination]][$index]];
+                }
+            }
             $response = $this->call(
                 $method,
                 $url,
-                $requestBody
+                $payload
             );
-            for ($k = 0; $k < self::K; $k++) {
-                foreach ($dictionaries as $field => $dictionary) {
-                    if (sizeof($dictionary) < 1) {
-                        unset($dictionaries[$field]);
-                        continue;
-                    }
-                    $requestBody[$field] = Arr::first($dictionary);
-                    unset($dictionaries[$field][array_key_first($dictionary)]);
-                    break;
-                }
-            }
-            //Se ho 500 vuol dire che ho eccezioni non gestite
             $this->assertNotEquals(500, $response->status());
         }
     }
@@ -122,9 +124,9 @@ class RouteCoverageTest extends ReservationTestCase
     public function requestProvider(): array
     {
         return [
+            ['/prenotazione/salva', 'POST', ['time', 'vaccine', 'state', 'structure', 'patient', 'date'], 100],
             ['/dashboard', 'GET', ['dummy'], 1],
             ['/prenotazioni', 'GET', array_merge(['items_per_page', 'current_page'], Reservation::getFilters()), 100],
-            ['/prenotazione/salva', 'POST', ['date', 'time', 'vaccine', 'state', 'structure', 'patient'], 100],
             ['/prenotazione/1/edit', 'GET', ['dummy'], 1],
             ['/prenotazione/1/richiamo', 'GET', ['dummy'], 1],
             ['/prenotazione/busy-times', 'POST', ['date', 'reservation_id', 'structure_id'], 50],

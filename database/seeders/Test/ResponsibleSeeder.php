@@ -38,7 +38,7 @@ class ResponsibleSeeder extends Seeder
             $email = sprintf('%s_%s_%s@email.it', $firstName, $lastName, $index);
 
             $genderValue = 1;
-            $dob = Carbon::today()->subYears(20 + $index);
+            $dob = Carbon::today()->subYears(20)->subDays($index);
             $birthPlace = "Napoli";
             $fiscalCodeGender = 'M';
             $address = "Via fittizia 57";

@@ -6,8 +6,10 @@ use App\Models\Stock;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
+
 class StockValidator extends EntityValidator
 {
+
     /**
      * @param $extendParameters
      * @return array
