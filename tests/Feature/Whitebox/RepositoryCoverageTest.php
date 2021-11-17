@@ -48,7 +48,7 @@ class RepositoryCoverageTest extends ReservationTestCase
         }
         if ($type === 'NULL' || !$type) {
             return [
-                null, '', -1, 0, 1, $faker->email
+                null, '', -1, 0, 1
             ];
         }
         /** @var Model $model */

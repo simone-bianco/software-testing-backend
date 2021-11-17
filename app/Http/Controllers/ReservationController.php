@@ -82,9 +82,8 @@ class ReservationController extends Controller
                             ->where('state', '=', Reservation::COMPLETED_STATE)
                             ->get()
                             ->count() >= 1;
-
-                    return array_merge([
-                        'id' => $reservation->id],
+                    return array_merge(
+                        ['id' => $reservation->id],
                         $reservation->toArray(),
                         [
                             'is_recall' => $isRecall,

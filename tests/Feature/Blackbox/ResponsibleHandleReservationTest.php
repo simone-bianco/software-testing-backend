@@ -9,7 +9,7 @@ use App\Models\Stock;
 use App\Models\Structure;
 use App\Models\Vaccine;
 use Carbon\Carbon;
-use Illuminate\Validation\ValidationException;
+use Inertia\Testing\Assert;
 use Session;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\ReservationTestCase;
@@ -81,8 +81,23 @@ final class ResponsibleHandleReservationTest extends ReservationTestCase
     }
 
     /**
-     * Test per verificare la funzionalità tramite la quale un responsabile sanitario accetta la prenotazione da parte
-     * di un paziente
+     * @group reservation
+     * @group responsible
+     * @group blackbox
+     * @throws Throwable
+     */
+    public function testResponsibleCanViewReservations()
+    {
+        $this->get('/prenotazioni')
+            ->assertInertia(fn (Assert $page) => $page
+                ->has(
+                    'reservations.data',
+                    Reservation::whereIn('stock_id', $this->responsible->structure->stocks()->pluck('id'))->count()
+                )
+            )->assertStatus(200);
+    }
+
+    /**
      * @group reservation
      * @group responsible
      * @group blackbox
