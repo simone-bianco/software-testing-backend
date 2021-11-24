@@ -1,0 +1,15 @@
+
+[XDebug]
+;zend_extension = "c:\xampp\php\ext\php_xdebug-2.9.7-7.4-vc15-x86_64.dll"
+;xdebug.remote_autostart = 1
+;xdebug.profiler_append = 0
+;xdebug.profiler_enable = 0
+;xdebug.profiler_enable_trigger = 0
+;xdebug.profiler_output_dir = "c:\xampp\tmp"
+;xdebug.remote_enable = 1
+;xdebug.remote_handler = "dbgp"
+;xdebug.remote_host = "127.0.0.1"
+;xdebug.remote_log = "c:\xampp\tmp\xdebug.txt"
+;xdebug.remote_port = 9000
+;xdebug.trace_output_dir = "c:\xampp\tmp"
+;xdebug.remote_cookie_expire_time = 36000
