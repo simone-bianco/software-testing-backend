@@ -165,12 +165,13 @@ class RepositoryCoverageTest extends ReservationTestCase
         $repository = app($class);
         $repositoryClass = new ReflectionClass($repository);
         $methods = $repositoryClass->getMethods();
+        $testsCount = 0;
         foreach ($methods as $method) {
             if ($method->name === "__construct") {
                 continue;
             }
             $dictionaries = $this->getMethodDictionary($method);
-            $fieldsCombinations = $this->generateKCombinations($dictionaries, 5);
+            $fieldsCombinations = $this->generateKCombinations($dictionaries, 3);
             $keysByCombination = [];
             $lengthsByKeyCombinations = [];
             foreach ($fieldsCombinations as $keysCombination => $fieldsCombination) {
@@ -204,7 +205,9 @@ class RepositoryCoverageTest extends ReservationTestCase
                         . print_r($callBody, true));
                 }
             }
+            $testsCount++;
         }
+        \Log::channel('daily')->info(print_r($testsCount, true));
     }
 
     public function repositoryProvider(): array

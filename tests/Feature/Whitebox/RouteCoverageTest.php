@@ -69,7 +69,7 @@ class RouteCoverageTest extends ReservationTestCase
             $keysByCombination[$keysCombination] = explode('.', $keysCombination);
             $lengthsByKeyCombinations[$keysCombination] = sizeof($fieldsCombination);
         }
-
+        $testsCount = 2;
         $iterations = sizeof(Arr::first($fieldsCombinations));
         for ($i = 0; $i < $iterations; $i++) {
             $payload = [];
@@ -84,7 +84,9 @@ class RouteCoverageTest extends ReservationTestCase
                 $payload
             );
             $this->assertNotEquals(500, $response->status());
+            $testsCount++;
         }
+        \Log::channel('daily')->info(print_r($testsCount, true));
     }
 
     /**
@@ -106,6 +108,7 @@ class RouteCoverageTest extends ReservationTestCase
             $dictionaries[$field] = $this->getDictionary($field);
         }
 
+        $testsCount = 0;
         for ($i = 0; $i < $iterations; $i++) {
             $requestBody = [];
             foreach ($dictionaries as $field => $dictionary) {
@@ -118,7 +121,9 @@ class RouteCoverageTest extends ReservationTestCase
             );
             //Se ho 500 vuol dire che ho eccezioni non gestite
             $this->assertNotEquals(500, $response->status());
+            $testsCount++;
         }
+        \Log::channel('daily')->info(print_r($testsCount, true));
     }
 
     public function requestProvider(): array

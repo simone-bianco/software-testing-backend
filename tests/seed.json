@@ -46,6 +46,15 @@
       "account_id": false
     }
   ],
+  "reservations": [
+    {
+      "id": 1,
+      "date": "data attuale + 1 giorno",
+      "time": "8:00",
+      "stock_id": 1,
+      "patient_id": 1
+    }
+  ],
   "vaccines": [
     {
       "id": 1,

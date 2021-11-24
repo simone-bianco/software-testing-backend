@@ -3,6 +3,8 @@
 namespace Tests\Browser;
 
 use App\Models\Responsible;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Facebook\WebDriver\Remote\RemoteWebElement;
 use Facebook\WebDriver\WebDriverBy;
 use Laravel\Dusk\Browser;
 use PragmaRX\Google2FA\Google2FA;
@@ -14,6 +16,55 @@ class FirstLoginTest extends BackofficeDuskTestCase
     public function setUp(): void
     {
         parent::setUp();
+    }
+
+    /**
+     * @param  string|string[]  $text
+     * @param RemoteWebDriver|RemoteWebElement $driver
+     * @return RemoteWebElement|null
+     */
+    protected function getButtonByText($text, $driver): ?RemoteWebElement
+    {
+        if (!is_array($text)) {
+            $text = array($text);
+        }
+        $buttons = $driver->findElements(WebDriverBy::tagName('button'));
+        foreach ($buttons as $button) {
+            try {
+                $buttonText = $button->findElement(WebDriverBy::tagName('span'))->getText();
+                if (in_array(strtolower($buttonText), $text)) {
+                    return $button;
+                }
+            } catch (Throwable $exception) {
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param  string|string[]  $text
+     * @param RemoteWebDriver|RemoteWebElement $driver
+     * @return RemoteWebElement|null
+     */
+    protected function getInputByLabelText($text, $driver): ?RemoteWebElement
+    {
+        if (!is_array($text)) {
+            $text = array($text);
+        }
+        # Prendo gli input text
+        $inputs = $driver->findElements(WebDriverBy::tagName('input'));
+        foreach ($inputs as $input) {
+            try {
+                $inputId = $input->getAttribute('id');
+                $label = $driver->findElement(WebDriverBy::xpath("(//label[@for='$inputId'])[1]"));
+                $labelText = strtolower($label->getText());
+                if (in_array($labelText, $text)) {
+                    return $input;
+                }
+            } catch (Throwable $exception) {
+            }
+        }
+        return null;
     }
 
     /**
@@ -33,23 +84,27 @@ class FirstLoginTest extends BackofficeDuskTestCase
             $browser->screenshot('firstLoginTest/1.png');
             //cerco il form del login
             $loginForm = $browser->driver->findElement(WebDriverBy::tagName('form'));
+
+
             //prendo gli input del form
             $inputs = $loginForm->findElements(WebDriverBy::tagName('input'));
             //inserimento email e password
-            foreach ($inputs as $input) {
-                if ($input->getAttribute('type') === 'text') {
-                    $input->sendKeys($responsible->email);
-                    continue;
-                }
+            $emailInput = $this->getInputByLabelText(['email', 'user', 'username'], $loginForm);
+            $this->assertNotNull($emailInput);
+            $passwordInput = $this->getInputByLabelText('password', $loginForm);
+            $this->assertNotNull($passwordInput);
 
-                if ($input->getAttribute('type') === 'password') {
-                    $input->sendKeys('test');
-                }
-            }
+            $emailInput->sendKeys($responsible->email);
+            $passwordInput->sendKeys('test');
 
             $browser->screenshot('firstLoginTest/2.png');
+
+            $loginButton = $this->getButtonByText(['login', 'accedi'], $loginForm);
+            $this->assertNotNull($loginButton);
+
             //click su login
-            $browser->element(sprintf('xpath[%s]', self::LOGIN_SUBMIT_XPATH))->click();
+            $loginButton->click();
+
             //aspetto che si carichi la pagina
             $browser->waitForLocation('/qr/register');
             $browser->screenshot('firstLoginTest/3.png');
@@ -59,10 +114,17 @@ class FirstLoginTest extends BackofficeDuskTestCase
             //ricavo l'otp, come se avessi usato l'applicazione di google
             $currentOtp = $google2fa->getCurrentOtp($secret);
             //scrivo l'otp nell'input
-            $browser->type('input[type=text]', $currentOtp);
+            $insertOtpInput = $this->getInputByLabelText('codice generato', $browser->driver);
+            $this->assertNotNull($insertOtpInput);
+            $insertOtpInput->sendKeys($currentOtp);
+
             $browser->screenshot('firstLoginTest/4.png');
+
             //click su conferma
-            $browser->clickAtXPath(self::TWO_FA_REGISTER_SUBMIT_XPATH);
+            $confirmOtp = $this->getButtonByText(['completa registrazione', 'conferma'], $browser->driver);
+            $this->assertNotNull($confirmOtp);
+            $confirmOtp->click();
+
             $browser->screenshot('firstLoginTest/5.png');
             //aspetto che si carichi
             $browser->waitForLocation('/qr/authenticate')
@@ -70,12 +132,17 @@ class FirstLoginTest extends BackofficeDuskTestCase
             $browser->screenshot('firstLoginTest/6.png');
             //ricalcolo l'otp, in quanto il precedente potrebbe essere scaduto
             $currentOtp = $google2fa->getCurrentOtp($secret);
+
             //inserisco l'otp nell'input text
-            $browser->type('input[type=text]', $currentOtp);
+            $insertOtpInput = $this->getInputByLabelText('codice generato', $browser->driver);
+            $this->assertNotNull($insertOtpInput);
+            $insertOtpInput->sendKeys($currentOtp);
+
             $browser->screenshot('firstLoginTest/7.png');
-            //click sul pulsante conferma
-            $browser->clickAtXPath(self::TWO_FA_AUTH_SUBMIT_XPATH);
-            $browser->screenshot('firstLoginTest/8.png');
+            //click su conferma
+            $confirmOtp = $this->getButtonByText(['conferma'], $browser->driver);
+            $this->assertNotNull($confirmOtp);
+            $confirmOtp->click();
             //aspetto che si carichi la dashboard
             $browser->waitForLocation('/dashboard');
             $browser->screenshot('firstLoginTest/9.png');
